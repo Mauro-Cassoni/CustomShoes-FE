@@ -1,10 +1,133 @@
-<div class="navbar">
+<div class="navbar px-3 py-1">
   <a routerLink="/home">
     <img src="../../../assets/img/logo/CustomShoes.png" alt="logo CustomShoes">
   </a>
 
-  <div>
+  <div class="d-flex flex-end">
+    <!-- desktop navbar -->
+    <div class="d-none d-md-flex">
+
+      <form class="d-flex mx-2" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+        <button class="btn" type="submit">
+          <i class="bi bi-search btnProfile"></i>
+        </button>
+      </form>
+
+      <!-- logged cart button -->
+      <div *ngIf="isLoggedIn$" class="mx-2 btnProfile">
+        <div class="col">
+          <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+              <i class="bi bi-cart3"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <a routerLink="" ngbDropdownItem>Product</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- no logged cart button -->
+      <a *ngIf="!isLoggedIn$" class="mx-2 btnProfile">
+        <i class="bi bi-cart3"></i>
+      </a>
+
+      <!-- no logged profile -->
+      <a *ngIf="!isLoggedIn$" class="mx-2 btnProfile">
+        <i class="bi bi-person"></i>
+      </a>
+
+      <!-- logged profile -->
+      <div class="" *ngIf="isLoggedIn$" class="mx-2 btnProfile">
+        <div class="col">
+          <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+              <i class="bi bi-person-fill"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <a routerLink="" ngbDropdownItem>ACCOUNT</a>
+              <a routerLink="" ngbDropdownItem>WISHLIST</a>
+              <a routerLink="" ngbDropdownItem>LOGOUT</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </div>
-
 </div>
+
+  <!-- mobile navbar -->
+  <div class="mobile-navbar d-flex justify-content-between d-md-none px-3 py-1 rounded">
+
+    <!-- logged cart button -->
+    <div *ngIf="isLoggedIn$" class="btnProfile">
+      <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+            <i class="bi bi-cart3"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a routerLink="" ngbDropdownItem>Product</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- no logged cart button -->
+    <a *ngIf="!isLoggedIn$" class="btnProfile">
+      <i class="bi bi-cart3"></i>
+    </a>
+
+    <!-- search button -->
+    <div>
+      <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+            <i class="bi bi-search btnProfile"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a routerLink="" ngbDropdownItem>Product</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- home button -->
+    <a class="btnProfile">
+      <i class="bi bi-house-fill"></i>
+    </a>
+
+    <!-- logged heart -->
+    <a *ngIf="isLoggedIn$" class="btnProfile">
+      <i class="bi bi-heart-fill"></i>
+    </a>
+
+    <!-- no logged heart -->
+    <a *ngIf="!isLoggedIn$" class="btnProfile">
+      <i class="bi bi-heart"></i>
+    </a>
+
+    <!-- no logged profile -->
+    <a *ngIf="!isLoggedIn$" class="btnProfile">
+      <i class="bi bi-person"></i>
+    </a>
+
+    <!-- logged profile -->
+    <div class="btnProfile" *ngIf="isLoggedIn$">
+      <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+            <i class="bi bi-person-fill"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a routerLink="" ngbDropdownItem>ACCOUNT</a>
+            <a routerLink="" ngbDropdownItem>WISHLIST</a>
+            <a routerLink="" ngbDropdownItem>LOGOUT</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
