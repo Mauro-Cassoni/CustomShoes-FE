@@ -28,11 +28,11 @@ export class AuthService {
   }
 
   register(register: IRegisterData): Observable<IAuthData> {
-    return this.http.post<IAuthData>(`${this.endpoint}auth/register`, register)
+    return this.http.post<IAuthData>(`${this.endpoint}/auth/register`, register)
   }
 
   login(loginData: IAuthData): Observable<IAuthData> {
-    return this.http.post<IAuthData>(`${this.endpoint}auth/login`, loginData)
+    return this.http.post<IAuthData>(`${this.endpoint}/auth/login`, loginData)
       .pipe(tap(data => {
         this.authSubject.next(data)
         localStorage.setItem('authData', JSON.stringify(data))

@@ -1,3 +1,4 @@
+import { UserType } from './../../../Enums/user-type';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../../Services/auth.service';
@@ -13,12 +14,11 @@ import { IRegisterData } from '../../../Models/auth/i-register-data';
 export class RegisterComponent {
 
   form! : FormGroup;
+  userTypes = Object.values(UserType);
   loading! : boolean;
   somethingWrong! : boolean;
   errorMsg!:IRegisterData;
   msg!:IRegisterData;
-
-  unmatch: boolean = false
   match: boolean = false
 
   constructor(
@@ -31,13 +31,14 @@ export class RegisterComponent {
     this.form = this.formBuilder.group({
       name: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),
       surname: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),
-      email: this.formBuilder.control(null, [Validators.required, Validators.email]),
+      email: this.formBuilder.control(null, [Validators.required, Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)]),
       password: this.formBuilder.control(null, [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>])(?=.*[^\s]).{8,}$/)]),
       confirmPassword: this.formBuilder.control(null, [Validators.required, this.passwordMatchValidator]),
+      userType: [null, Validators.required],
 
       businessName: this.formBuilder.control(null),
       vatNumber: this.formBuilder.control(null, [Validators.minLength(9), Validators.maxLength(11)]),
-      pec: this.formBuilder.control(null, [Validators.email]),
+      pec: this.formBuilder.control(null, [Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)]),
       sdi: this.formBuilder.control(null, [Validators.minLength(7), Validators.maxLength(7)]),
     })
   }
@@ -54,11 +55,14 @@ export class RegisterComponent {
 
   submit(){
     this.loading=true;
-    this.form.value.firstname= this.form.value.firstname.charAt(0).toUpperCase()+this.form.value.firstname.slice(1).toLowerCase();
-    this.form.value.lastname= this.form.value.lastname.charAt(0).toUpperCase()+this.form.value.lastname.slice(1).toLowerCase();
+    this.form.value.name= this.form.value.name.charAt(0).toUpperCase()+this.form.value.name.slice(1).toLowerCase();
+    this.form.value.surname= this.form.value.surname.charAt(0).toUpperCase()+this.form.value.surname.slice(1).toLowerCase();
     this.form.value.email= this.form.value.email.toLowerCase();
+
     delete this.form.value.confirmPassword;
-    this.form.value.pec= this.form.value.pec.toLowerCase();
+    if(this.form.value.userType==='BUSINESS'){
+      this.form.value.pec= this.form.value.pec.toLowerCase();
+    }
 
     this.authService.register(this.form.value)
     .pipe(tap(()=>{
@@ -78,8 +82,8 @@ export class RegisterComponent {
     if (field) {
       if (field.errors) {
         if (field.errors['required']) errorMsg = 'Empty field'
-        if (field.errors['pattern'] && fieldName === 'email' || fieldName === 'pec') errorMsg = 'Incorrect email format'
-        if (field.errors['minlength'] && fieldName === 'password' || fieldName === 'confirmPassword') errorMsg = 'Minimum password length: 8 characters'
+        if (field.errors['pattern'] && fieldName === 'email') errorMsg = 'Incorrect email format'
+        if (field.errors['minlength'] && fieldName === 'password' || fieldName === 'confirmPassword') errorMsg = 'Password: minimum 8 characters, at least 1 uppercase letter, at least 1 lowercase letter, at least one number, at least one special character'
         if (field.errors['minlength'] && (fieldName === 'name' || fieldName === 'surname')) errorMsg = 'Minimum length: 2 characters'
         if (field.errors['maxlength'] && (fieldName === 'name' || fieldName === 'surname')) errorMsg = 'Maximum length: 15 characters'
         if (field.errors['pattern'] && (fieldName === 'name' || fieldName === 'surname')) errorMsg = 'Only letters of the alphabet are allowed'
@@ -93,6 +97,21 @@ export class RegisterComponent {
   }
 
   ngDoCheck(){
+
+    const userTypeControl = this.form.get('userType');
+    if (userTypeControl?.value === 'BUSINESS') {
+      this.form.get('businessName')?.setValidators(Validators.required);
+      this.form.get('vatNumber')?.setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(11)]);
+      this.form.get('pec')?.setValidators([Validators.required, Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)]);
+      this.form.get('sdi')?.setValidators([Validators.required, Validators.minLength(7), Validators.maxLength(7)]);
+    } else {
+      this.form.get('businessName')?.clearValidators();
+      this.form.get('vatNumber')?.clearValidators();
+      this.form.get('pec')?.clearValidators();
+      this.form.get('sdi')?.clearValidators();
+    }
+
+    this.form.updateValueAndValidity();
 
     this.errorMsg = {
       name: this.invalidMessages('name'),

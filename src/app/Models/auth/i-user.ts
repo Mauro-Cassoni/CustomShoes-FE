@@ -1,3 +1,5 @@
+import { Role } from "../../Enums/role";
+import { UserType } from "../../Enums/user-type";
 import { IAddress } from "../i-address";
 import { IInvoice } from "../i-invoice";
 import { IProduct } from "../i-product";
@@ -9,10 +11,10 @@ export interface IUser {
   firstname: string;
   lastname: string;
   phoneNumber: string;
-  UserType: string;
+  UserType: UserType;
 
   wishlist: IProduct[];
-  role: string;
+  role: Role;
   shippingAddress: IAddress;
   businessName: string;
   vatNumber: string;
