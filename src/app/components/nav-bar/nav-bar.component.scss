@@ -5,6 +5,7 @@ img {
 .navbar,
 .mobile-navbar {
   background-color: var(--my-purple);
+  z-index: 100;
 }
 
 .navbar-toggler-icon {
@@ -16,6 +17,10 @@ img {
   bottom: 0;
   z-index: 50;
   width: 100vw;
+}
+
+.mobile-form{
+  width: 67vw;
 }
 
 .btnProfile {

@@ -1,1 +1,18 @@
-<p>register works!</p>
+<div class="container py-3">
+  <div>
+    <form [formGroup]="form">
+
+      <h2>Registrazione</h2>
+
+      <div class="col-md-6">
+        <label for="name">Name *</label>
+        <input type="text" id="name" class="form-control" formControlName="name"
+          [ngClass]="{'is-valid': isValid('name'), 'is-invalid': isInvalid('name')}">
+        <span *ngIf="form.controls['name'].dirty" [ngClass]="{ 'valid': isValid('name'), 'invalid': isInvalid('name') }"
+          class="ms-2">{{msg.name}}</span>
+      </div>
+
+
+    </form>
+  </div>
+</div>
