@@ -2,7 +2,20 @@
   <div>
     <form [formGroup]="form" (ngSubmit)="submit()">
 
-      <h2>Registrazione</h2>
+      <h2 class="text-center my-3">Sign up</h2>
+
+            <!-- User Type -->
+            <div class="col-md-6">
+              <label for="userType">User Type *</label>
+              <select id="userType" class="form-control" formControlName="userType">
+                <option *ngFor="let type of userTypes" [value]="type">{{ type }}</option>
+              </select>
+              <div class="error-msg">
+                <span *ngIf="form.controls['userType'].dirty"
+                  [ngClass]="{ 'valid': isValid('userType'), 'invalid': isInvalid('userType') }"
+                  class="ms-1 text-danger">{{msg.userType}}</span>
+              </div>
+            </div>
 
       <!-- name -->
       <div class="col-md-6">
@@ -60,19 +73,6 @@
         <div class="error-msg"></div>
       </div>
 
-      <!-- User Type -->
-      <div class="col-md-6">
-        <label for="userType">User Type *</label>
-        <select id="userType" class="form-control" formControlName="userType">
-          <option *ngFor="let type of userTypes" [value]="type">{{ type }}</option>
-        </select>
-        <div class="error-msg">
-          <span *ngIf="form.controls['userType'].dirty"
-            [ngClass]="{ 'valid': isValid('userType'), 'invalid': isInvalid('userType') }"
-            class="ms-1 text-danger">{{msg.userType}}</span>
-        </div>
-      </div>
-
       <!-- Business section -->
       <div *ngIf="form.controls['userType'].value === 'BUSINESS'" >
 
@@ -126,8 +126,16 @@
 
       </div>
 
-      <button [disabled]="!form.valid" class="btn" type="submit">Sign in</button>
+      <button [disabled]="!form.valid" class="btn btn-sign-in" type="submit">Sign in</button>
 
     </form>
+
+    <div class="my-3">
+      <span>Are you already registered? Go to </span>
+      <a type="submit" routerLink="../../auth/login">
+        Login
+      </a>
+    </div>
+
   </div>
 </div>

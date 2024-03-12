@@ -29,12 +29,13 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      userType: [null, Validators.required],
       name: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),
       surname: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),
       email: this.formBuilder.control(null, [Validators.required, Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)]),
       password: this.formBuilder.control(null, [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>])(?=.*[^\s]).{8,}$/)]),
       confirmPassword: this.formBuilder.control(null, [Validators.required, this.passwordMatchValidator]),
-      userType: [null, Validators.required],
+
 
       businessName: this.formBuilder.control(null),
       vatNumber: this.formBuilder.control(null, [Validators.minLength(9), Validators.maxLength(11)]),
@@ -82,7 +83,7 @@ export class RegisterComponent {
     if (field) {
       if (field.errors) {
         if (field.errors['required']) errorMsg = 'Empty field'
-        if (field.errors['pattern'] && fieldName === 'email') errorMsg = 'Incorrect email format'
+        if (field.errors['pattern'] && fieldName === 'email' || fieldName === 'pec') errorMsg = 'Incorrect email format'
         if (field.errors['minlength'] && fieldName === 'password' || fieldName === 'confirmPassword') errorMsg = 'Password: minimum 8 characters, at least 1 uppercase letter, at least 1 lowercase letter, at least one number, at least one special character'
         if (field.errors['minlength'] && (fieldName === 'name' || fieldName === 'surname')) errorMsg = 'Minimum length: 2 characters'
         if (field.errors['maxlength'] && (fieldName === 'name' || fieldName === 'surname')) errorMsg = 'Maximum length: 15 characters'

@@ -36,17 +36,8 @@ export class AuthService {
       .pipe(tap(data => {
         this.authSubject.next(data)
         localStorage.setItem('authData', JSON.stringify(data))
-        this.autoLogout(data.accessToken)
       }
       ))
-  }
-
-  autoLogout(jwt:string){
-    const expDate =this.jwtHelper.getTokenExpirationDate(jwt) as Date;
-    const expMs = expDate.getTime() - new Date().getTime()
-  setTimeout(()=> {
-    this.logout()
-  }, expMs)
   }
 
   logout(){
@@ -61,8 +52,6 @@ export class AuthService {
 
     const accessData:IAuthData = JSON.parse(userJson);
     if(this.jwtHelper.isTokenExpired(accessData.accessToken)) return
-
-    this.autoLogout(accessData.accessToken)
     this.authSubject.next(accessData)
   }
 

@@ -16,11 +16,11 @@
       </form>
 
       <!-- logged cart button -->
-      <div *ngIf="isLoggedIn$" class="mx-2 btnProfile">
+      <div *ngIf="isLoggedIn$" class="mx-2">
         <div class="col">
           <div ngbDropdown class="d-inline-block">
             <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
-              <i class="bi bi-cart3"></i>
+              <i class="bi bi-cart3 btnProfile"></i>
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <a routerLink="" ngbDropdownItem>Product</a>
@@ -35,7 +35,7 @@
       </a>
 
       <!-- no logged profile -->
-      <div class="mx-2">
+      <div class="mx-2" *ngIf="!isLoggedIn$">
         <div class="col">
           <div ngbDropdown class="d-inline-block">
             <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
@@ -74,11 +74,11 @@
   <div class="mobile-navbar d-flex justify-content-between align-items-center d-md-none px-3 py-1 rounded">
 
     <!-- logged cart button -->
-    <div *ngIf="isLoggedIn$" class="btnProfile">
+    <div *ngIf="isLoggedIn$">
       <div class="col">
         <div ngbDropdown class="d-inline-block">
           <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
-            <i class="bi bi-cart3"></i>
+            <i class="bi bi-cart3 btnProfile"></i>
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
             <a routerLink="" ngbDropdownItem>Product</a>
@@ -127,7 +127,7 @@
     </a>
 
         <!-- no logged profile -->
-    <div>
+    <div *ngIf="!isLoggedIn$">
       <div class="col">
         <div ngbDropdown class="d-inline-block">
           <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
