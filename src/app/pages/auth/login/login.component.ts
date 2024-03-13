@@ -12,7 +12,7 @@ import { ILoginData } from '../../../Models/auth/i-login-data';
 export class LoginComponent {
 
   constructor(
-    private AuthService : AuthService,
+    private authService : AuthService,
     private formBuilder : FormBuilder,
     private router: Router,
   ){}
@@ -72,8 +72,9 @@ export class LoginComponent {
   }
 
   login(){
-    this.AuthService.login(this.form.value).subscribe(data =>{
-      this.router.navigate(['/home'])
+    this.authService.login(this.form.value).subscribe(data =>{
+      this.authService.isLoggedIn$.subscribe(data => {})
+      this.router.navigate(['../../profile'])
     })
   }
 

@@ -24,7 +24,7 @@ export class AuthService {
     private router:Router
     ) {
 
-    this.restorUser()
+    this.restoreUser()
   }
 
   register(register: IRegisterData): Observable<IAuthData> {
@@ -36,23 +36,34 @@ export class AuthService {
       .pipe(tap(data => {
         this.authSubject.next(data)
         localStorage.setItem('authData', JSON.stringify(data))
+        this.autoLogout(data.token)
       }
       ))
   }
 
-  logout(){
+  logout() {
     this.authSubject.next(null);
     localStorage.removeItem('authData');
     this.router.navigate(['auth/login']);
   }
 
-  restorUser(){
-    const userJson:string|null = localStorage.getItem('authData');
-    if(!userJson) return;
-
-    const accessData:IAuthData = JSON.parse(userJson);
-    if(this.jwtHelper.isTokenExpired(accessData.accessToken)) return
-    this.authSubject.next(accessData)
+  autoLogout(jwt:string){
+    let expDate =this.jwtHelper.getTokenExpirationDate(jwt) as Date;
+    let expMs = expDate.getTime() - new Date().getTime()
+  setTimeout(()=> {
+    this.logout()
+  }, expMs)
   }
+
+  restoreUser() {
+    const userJson: string | null = localStorage.getItem('authData');
+    if (!userJson) return;
+    const accessData: IAuthData = JSON.parse(userJson);
+    if (this.jwtHelper.isTokenExpired(accessData.token)) return
+    this.autoLogout(accessData.token)
+    this.authSubject.next(accessData);
+  }
+
+
 
 }

@@ -8,10 +8,10 @@ export interface IUser {
   id: number;
   email: string;
   password: string;
-  firstname: string;
-  lastname: string;
+  name: string;
+  surname: string;
   phoneNumber: string;
-  UserType: UserType;
+  userType: UserType;
 
   wishlist: IProduct[];
   role: Role;
@@ -24,10 +24,4 @@ export interface IUser {
   registeredOfficeAddress: IAddress;
   operationalHeadquartersAddress: IAddress;
   invoices: IInvoice[];
-  authorities: string[];
-  username: string;
-  accountNonExpired: boolean;
-  accountNonLocked: boolean;
-  credentialsNonExpired: boolean;
-  enabled: boolean;
 }

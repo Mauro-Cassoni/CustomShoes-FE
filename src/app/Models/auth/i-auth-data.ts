@@ -1,6 +1,6 @@
 import { IUser } from "./i-user"
 
 export interface IAuthData {
-  accessToken: string
+  token: string
   user: IUser
 }
