@@ -20,6 +20,8 @@ export class ProfileComponent {
   ngOnInit(){
     this.authService.user$.subscribe(res => {
       if (res) this.user = res;
+      console.log(this.user);
+
     })
   }
 

@@ -8,13 +8,15 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DefaultInterceptor } from './Interceptors/default.interceptor';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

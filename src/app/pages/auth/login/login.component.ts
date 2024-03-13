@@ -20,6 +20,7 @@ export class LoginComponent {
   form! : FormGroup;
   errorMsg!: ILoginData;
   msg!: ILoginData;
+  isLoggedIn$!:boolean
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -74,7 +75,7 @@ export class LoginComponent {
   login(){
     this.authService.login(this.form.value).subscribe(data =>{
       this.authService.isLoggedIn$.subscribe(data => {})
-      this.router.navigate(['../../profile'])
+      this.router.navigate(['../../account'])
     })
   }
 
