@@ -3,6 +3,7 @@ export interface IProductMsg {
   name: string;
   brand: string;
   category: string;
+  manualCategory: string;
   description: string;
   size: string;
   color: string;

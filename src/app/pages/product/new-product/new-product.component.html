@@ -4,18 +4,6 @@
 
       <h2 class="text-center my-3">New product</h2>
 
-      <!-- Img -->
-      <div class="col-md-6">
-        <label for="name">Image *</label>
-        <input type="text" id="img" class="form-control" formControlName="img"
-          [ngClass]="{'is-valid': isValid('img'), 'is-invalid': isInvalid('img')}">
-        <div class="error-msg">
-          <span *ngIf="form.controls['img'].dirty"
-            [ngClass]="{ 'valid': isValid('img'), 'invalid': isInvalid('img') }"
-            class="ms-1 text-danger">{{msg.name}}</span>
-        </div>
-      </div>
-
       <!-- Name -->
       <div class="col-md-6">
         <label for="name">Name *</label>
@@ -40,18 +28,31 @@
         </div>
       </div>
 
-<!-- Category -->
-<div class="col-md-6">
-  <label for="category">Category *</label>
-  <select id="category" class="form-control" formControlName="category">
-    <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
-  </select>
-  <div class="error-msg">
-    <span *ngIf="form.controls['category'].dirty"
-      [ngClass]="{ 'valid': isValid('category'), 'invalid': isInvalid('category') }"
-      class="ms-1 text-danger">{{ msg.category }}</span>
-  </div>
-</div>
+      <!-- Category -->
+      <div class="col-md-6">
+        <label for="category">Category *</label>
+        <select id="category" class="form-control" formControlName="category">
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="error-msg">
+          <span *ngIf="form.controls['category'].dirty"
+            [ngClass]="{ 'valid': isValid('category'), 'invalid': isInvalid('category') }" class="ms-1 text-danger">{{
+            msg.category }}</span>
+        </div>
+      </div>
+
+      <!-- Other Category -->
+      <div class="col-md-6" *ngIf="form.value.category === 'Other'">
+        <label for="manualCategory">Manual Category</label>
+        <input type="text" id="manualCategory" class="form-control" formControlName="manualCategory"
+          [ngClass]="{'is-valid': isValid('manualCategory'), 'is-invalid': isInvalid('manualCategory')}">
+        <div class="error-msg">
+          <span *ngIf="form.controls['manualCategory'].dirty"
+            [ngClass]="{ 'valid': isValid('manualCategory'), 'invalid': isInvalid('manualCategory') }"
+            class="ms-1 text-danger">{{ msg.manualCategory }}</span>
+        </div>
+      </div>
 
       <!-- Size -->
       <div class="col-md-6">
@@ -81,7 +82,7 @@
       <!-- Price -->
       <div class="col-md-6">
         <label for="name">Price *</label>
-        <input type="number" id="price" class="form-control" formControlName="price"
+        <input type="text" id="price" class="form-control" formControlName="price"
           [ngClass]="{'is-valid': isValid('price'), 'is-invalid': isInvalid('price')}">
         <div class="error-msg">
           <span *ngIf="form.controls['price'].dirty"

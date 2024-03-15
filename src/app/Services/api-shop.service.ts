@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IProduct } from '../Models/i-product';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -12,6 +12,9 @@ export class ApiShopService {
   constructor(
     private http: HttpClient,
   ) { }
+
+  productSubject = new BehaviorSubject<IProduct | null>(null)
+  product$: Observable<IProduct | null> = this.productSubject.asObservable();
 
   getAll(): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(`${environment.URL}/products`);
@@ -42,11 +45,11 @@ export class ApiShopService {
   }
 
   create(product: Partial<IProduct>): Observable<IProduct> {
-    return this.http.post<IProduct>(`${environment.URL}/products`, product);
+    return this.http.post<IProduct>(`${environment.URL}/products/create`, product);
   }
 
   update(product: IProduct): Observable<IProduct> {
-    return this.http.put<IProduct>(`${environment.URL}/products/${product.id}`, product);
+    return this.http.put<IProduct>(`${environment.URL}/products/update/${product.id}`, product);
   }
 
   deleteById(id: number): Observable<void> {

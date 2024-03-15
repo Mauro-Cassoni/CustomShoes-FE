@@ -27,6 +27,8 @@ const routes: Routes = [
     canActivateChild: [AuthGuard]
   },
   {
+    path: 'product', loadChildren: () => import('./pages/product/product.module').then(m => m.ProductModule) },
+  {
     path: '404', component: PageNotFoundComponent
   },
   {

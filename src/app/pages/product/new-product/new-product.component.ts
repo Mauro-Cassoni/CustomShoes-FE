@@ -1,6 +1,6 @@
-import { ApiShopService } from './../../../Services/api-shop.service';
+import { ApiShopService } from '../../../Services/api-shop.service';
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tap, catchError } from 'rxjs';
 import { IProductMsg } from '../../../Models/i-product-msg';
@@ -33,9 +33,9 @@ export class NewProductComponent {
 
     this.form = this.formBuilder.group({
 
-      img: this.formBuilder.control(null, [Validators.required]),
+      img: this.formBuilder.control(null, []),
       name: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-      brand: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+      brand: this.formBuilder.control(null, [Validators.minLength(2), Validators.maxLength(20)]),
       category: this.formBuilder.control(null, [Validators.required]),
       description: this.formBuilder.control(null, [Validators.minLength(2)]),
       size: this.formBuilder.control(null, [Validators.minLength(2)]),
@@ -48,8 +48,14 @@ export class NewProductComponent {
   submit(){
     this.loading=true;
 
-    this.form.value.size = Number(this.form.value.size);
-    this.form.value.price = Number(this.form.value.price);
+    let categoryValue = this.form.value.category;
+    if (categoryValue === 'Other') {
+      categoryValue = this.form.value.manualCategory;
+    }
+
+    this.form.patchValue({
+      category: categoryValue
+    });
 
     this.apiShopService.create(this.form.value)
     .pipe(tap(()=>{
@@ -82,6 +88,7 @@ export class NewProductComponent {
       name: this.invalidMessages('name'),
       brand: this.invalidMessages('brand'),
       category: this.invalidMessages('category'),
+      manualCategory: this.invalidMessages('manualCategory'),
       description: this.invalidMessages('description'),
       size: this.invalidMessages('size'),
       color: this.invalidMessages('color'),
@@ -94,6 +101,7 @@ export class NewProductComponent {
       brand: '',
       category: '',
       description:'',
+      manualCategory:'',
       size: '',
       color: '',
       price: '',
@@ -113,6 +121,10 @@ export class NewProductComponent {
 
     if (this.errorMsg.category) {
       this.msg.category = this.errorMsg.category
+    }
+
+    if (this.errorMsg.manualCategory) {
+      this.msg.manualCategory = this.errorMsg.manualCategory
     }
 
     if (this.errorMsg.description) {

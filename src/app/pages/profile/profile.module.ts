@@ -10,8 +10,7 @@ import { OrderComponent } from './order/order.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProductComponent } from './product/product.component';
-import { NewProductComponent } from './new-product/new-product.component';
+import { NewProductComponent } from '../product/new-product/new-product.component';
 
 
 @NgModule({
@@ -22,7 +21,6 @@ import { NewProductComponent } from './new-product/new-product.component';
     WishlistComponent,
     OrderComponent,
     InvoiceComponent,
-    ProductComponent,
     NewProductComponent
   ],
   imports: [
