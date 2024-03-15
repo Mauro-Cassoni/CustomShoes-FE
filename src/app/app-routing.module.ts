@@ -1,7 +1,7 @@
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './pages/profile/auth.guard';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, CanActivateChild } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LogGuardGuard } from './pages/profile/log-guard.guard';
 
 const routes: Routes = [

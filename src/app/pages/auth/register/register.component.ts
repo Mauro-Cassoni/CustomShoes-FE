@@ -29,7 +29,7 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      userType: [null, Validators.required],
+      userType: ['CUSTOMER', Validators.required],
       name: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),
       surname: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),
       email: this.formBuilder.control(null, [Validators.required, Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)]),

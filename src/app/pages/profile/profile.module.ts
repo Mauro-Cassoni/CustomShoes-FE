@@ -11,6 +11,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './product/product.component';
+import { NewProductComponent } from './new-product/new-product.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ProductComponent } from './product/product.component';
     WishlistComponent,
     OrderComponent,
     InvoiceComponent,
-    ProductComponent
+    ProductComponent,
+    NewProductComponent
   ],
   imports: [
     CommonModule,
