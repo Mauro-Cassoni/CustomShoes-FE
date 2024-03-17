@@ -5,21 +5,18 @@
       <h2 class="text-center my-3">Edit <span>{{product.name}}</span></h2>
 
       <!-- Img -->
-      <div class="col-md-6">
-        <label for="name">Image *</label>
-        <input type="text" id="img" class="form-control" formControlName="img"
-          [ngClass]="{'is-valid': isValid('img'), 'is-invalid': isInvalid('img')}">
-        <div class="error-msg">
-          <span *ngIf="form.controls['img'].dirty" [ngClass]="{ 'valid': isValid('img'), 'invalid': isInvalid('img') }"
-            class="ms-1 text-danger">{{msg.name}}</span>
+      <div class="col my-3">
+        <label for="img">Image *</label>
+        <div *ngIf="product.img">
+          <img [src]="product.img" alt="product image" id="img">
         </div>
       </div>
 
       <!-- Name -->
-      <div class="col-md-6">
+      <div class="col-md-8">
         <label for="name">Name *</label>
         <input type="text" id="name" class="form-control" formControlName="name"
-          [ngClass]="{'is-valid': isValid('name'), 'is-invalid': isInvalid('name')}">
+          [ngClass]="{'is-valid': isValid('name'), 'is-invalid': isInvalid('name')}" [value]="product.name">
         <div class="error-msg">
           <span *ngIf="form.controls['name'].dirty"
             [ngClass]="{ 'valid': isValid('name'), 'invalid': isInvalid('name') }"
@@ -28,10 +25,10 @@
       </div>
 
       <!-- Brand -->
-      <div class="col-md-6">
+      <div class="col-md-8">
         <label for="name">Brand</label>
         <input type="text" id="brand" class="form-control" formControlName="brand"
-          [ngClass]="{'is-valid': isValid('brand'), 'is-invalid': isInvalid('brand')}">
+          [ngClass]="{'is-valid': isValid('brand'), 'is-invalid': isInvalid('brand')}" [value]="product.brand">
         <div class="error-msg">
           <span *ngIf="form.controls['brand'].dirty"
             [ngClass]="{ 'valid': isValid('brand'), 'invalid': isInvalid('brand') }"
@@ -40,36 +37,22 @@
       </div>
 
       <!-- Category -->
-      <div class="col-md-6">
+      <div class="col-md-8">
         <label for="category">Category *</label>
-        <select id="category" class="form-control" formControlName="category">
-          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
-          <option value="Other">Other</option>
-        </select>
+        <input type="text" id="category" class="form-control" formControlName="category"
+          [ngClass]="{'is-valid': isValid('category'), 'is-invalid': isInvalid('category')}">
         <div class="error-msg">
           <span *ngIf="form.controls['category'].dirty"
-            [ngClass]="{ 'valid': isValid('category'), 'invalid': isInvalid('category') }" class="ms-1 text-danger">{{
-            msg.category }}</span>
-        </div>
-      </div>
-
-      <!-- Other Category -->
-      <div class="col-md-6" *ngIf="showManualCategory">
-        <label for="manualCategory">Manual Category</label>
-        <input type="text" id="manualCategory" class="form-control" formControlName="manualCategory"
-          [ngClass]="{'is-valid': isValid('manualCategory'), 'is-invalid': isInvalid('manualCategory')}">
-        <div class="error-msg">
-          <span *ngIf="form.controls['manualCategory'].dirty"
-            [ngClass]="{ 'valid': isValid('manualCategory'), 'invalid': isInvalid('manualCategory') }"
-            class="ms-1 text-danger">{{ msg.manualCategory }}</span>
+            [ngClass]="{ 'valid': isValid('category'), 'invalid': isInvalid('category') }"
+            class="ms-1 text-danger">{{ msg.category }}</span>
         </div>
       </div>
 
       <!-- Size -->
-      <div class="col-md-6">
+      <div class="col-md-8">
         <label for="name">Size</label>
         <input type="text" id="size" class="form-control" formControlName="size"
-          [ngClass]="{'is-valid': isValid('size'), 'is-invalid': isInvalid('size')}">
+          [ngClass]="{'is-valid': isValid('size'), 'is-invalid': isInvalid('size')}" [value]="product.size">
         <div class="error-msg">
           <span *ngIf="form.controls['size'].dirty"
             [ngClass]="{ 'valid': isValid('size'), 'invalid': isInvalid('size') }"
@@ -78,10 +61,10 @@
       </div>
 
       <!-- Color -->
-      <div class="col-md-6">
+      <div class="col-md-8">
         <label for="name">Color</label>
         <input type="text" id="color" class="form-control" formControlName="color"
-          [ngClass]="{'is-valid': isValid('color'), 'is-invalid': isInvalid('color')}">
+          [ngClass]="{'is-valid': isValid('color'), 'is-invalid': isInvalid('color')}" [value]="product.color">
         <div class="error-msg">
 
           <span *ngIf="form.controls['color'].dirty"
@@ -91,10 +74,10 @@
       </div>
 
       <!-- Price -->
-      <div class="col-md-6">
-        <label for="name">Price *</label>
+      <div class="col-md-8">
+        <label for="name">Price <span>(€)</span> *</label>
         <input type="number" id="price" class="form-control" formControlName="price"
-          [ngClass]="{'is-valid': isValid('price'), 'is-invalid': isInvalid('price')}">
+          [ngClass]="{'is-valid': isValid('price'), 'is-invalid': isInvalid('price')}" [value]="product.price">
         <div class="error-msg">
           <span *ngIf="form.controls['price'].dirty"
             [ngClass]="{ 'valid': isValid('price'), 'invalid': isInvalid('price') }"
@@ -103,10 +86,10 @@
       </div>
 
       <!-- Description -->
-      <div class="col-md-6">
+      <div class="col-md-8">
         <label for="name">Description</label>
         <textarea type="info" id="description" class="form-control" formControlName="description"
-          [ngClass]="{'is-valid': isValid('description'), 'is-invalid': isInvalid('description')}"></textarea>
+          [ngClass]="{'is-valid': isValid('description'), 'is-invalid': isInvalid('description')}">{{product.description}}</textarea>
         <div class="error-msg">
           <span *ngIf="form.controls['description'].dirty"
             [ngClass]="{ 'valid': isValid('description'), 'invalid': isInvalid('description') }"
@@ -115,12 +98,12 @@
       </div>
 
       <!-- On Sale -->
-      <div class="col-md-6">
-        <label for="onSale">On Sale</label>
-        <input type="checkbox" id="onSale" class="form-check-input" formControlName="onSale">
+      <div class="col-md-8">
+        <label for="onSale">On Sale </label>
+        <input type="checkbox" id="onSale" class="form-check-input" formControlName="onSale" [value]="product.OnSale">
       </div>
 
-      <button [disabled]="!form.valid" class="btn btn-sign-in" type="submit">Create</button>
+      <button [disabled]="!form.valid" class="btn btn-save" type="submit">Save</button>
 
     </form>
 

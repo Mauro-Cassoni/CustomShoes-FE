@@ -31,26 +31,12 @@
       <!-- Category -->
       <div class="col-md-6">
         <label for="category">Category *</label>
-        <select id="category" class="form-control" formControlName="category">
-          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
-          <option value="Other">Other</option>
-        </select>
+        <input type="text" id="category" class="form-control" formControlName="category"
+          [ngClass]="{'is-valid': isValid('category'), 'is-invalid': isInvalid('category')}">
         <div class="error-msg">
           <span *ngIf="form.controls['category'].dirty"
-            [ngClass]="{ 'valid': isValid('category'), 'invalid': isInvalid('category') }" class="ms-1 text-danger">{{
-            msg.category }}</span>
-        </div>
-      </div>
-
-      <!-- Other Category -->
-      <div class="col-md-6" *ngIf="form.value.category === 'Other'">
-        <label for="manualCategory">Manual Category</label>
-        <input type="text" id="manualCategory" class="form-control" formControlName="manualCategory"
-          [ngClass]="{'is-valid': isValid('manualCategory'), 'is-invalid': isInvalid('manualCategory')}">
-        <div class="error-msg">
-          <span *ngIf="form.controls['manualCategory'].dirty"
-            [ngClass]="{ 'valid': isValid('manualCategory'), 'invalid': isInvalid('manualCategory') }"
-            class="ms-1 text-danger">{{ msg.manualCategory }}</span>
+            [ngClass]="{ 'valid': isValid('category'), 'invalid': isInvalid('category') }"
+            class="ms-1 text-danger">{{ msg.category }}</span>
         </div>
       </div>
 
@@ -103,7 +89,7 @@
         </div>
       </div>
 
-      <button [disabled]="!form.valid" class="btn btn-sign-in" type="submit">Create</button>
+      <button [disabled]="!form.valid" class="btn btn-sign-in" type="submit">Next</button>
 
     </form>
 

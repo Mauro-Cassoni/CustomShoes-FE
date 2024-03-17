@@ -12,13 +12,13 @@ import { IProductMsg } from '../../../Models/i-product-msg';
 })
 export class NewProductComponent {
 
-  form! : FormGroup;
-  loading! : boolean;
-  somethingWrong! : boolean;
-  errorMsg!:IProductMsg;
-  msg!:IProductMsg;
+  form!: FormGroup;
+  loading!: boolean;
+  somethingWrong!: boolean;
+  errorMsg!: IProductMsg;
+  msg!: IProductMsg;
   match: boolean = false
-  categories: string[] = [];
+  categories!: string[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,9 +27,6 @@ export class NewProductComponent {
   ) { }
 
   ngOnInit() {
-    this.apiShopService.getAllCat().subscribe(res => {
-      this.categories = res
-    })
 
     this.form = this.formBuilder.group({
 
@@ -37,7 +34,7 @@ export class NewProductComponent {
       name: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       brand: this.formBuilder.control(null, [Validators.minLength(2), Validators.maxLength(20)]),
       category: this.formBuilder.control(null, [Validators.required]),
-      description: this.formBuilder.control(null, [Validators.minLength(2)]),
+      description: this.formBuilder.control(null, [Validators.required, Validators.minLength(2)]),
       size: this.formBuilder.control(null, [Validators.minLength(2)]),
       color: this.formBuilder.control(null, [Validators.minLength(2)]),
       price: this.formBuilder.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]),
@@ -45,28 +42,27 @@ export class NewProductComponent {
     })
   }
 
-  submit(){
-    this.loading=true;
+  submit(): void {
+    if (this.form.valid) {
+      this.loading = true;
 
-    let categoryValue = this.form.value.category;
-    if (categoryValue === 'Other') {
-      categoryValue = this.form.value.manualCategory;
+      this.apiShopService.create(this.form.value)
+        .pipe(
+          tap((createdProduct) => {
+            this.loading = false;
+          }),
+          catchError(error => {
+            this.somethingWrong = true;
+            console.log(error);
+            throw error;
+          })
+        )
+        .subscribe(data => {
+          console.log(data);
+
+          this.router.navigate(['/product/edit-product', data.obj.id]);
+        });
     }
-
-    this.form.patchValue({
-      category: categoryValue
-    });
-
-    this.apiShopService.create(this.form.value)
-    .pipe(tap(()=>{
-      this.loading=false
-      this.router.navigate(['/account/products'])
-    }),catchError(error=>{
-      this.somethingWrong=true;
-      console.log(error);
-
-      throw error;
-    })).subscribe();
   }
 
   invalidMessages(fieldName: string): string {
@@ -82,13 +78,12 @@ export class NewProductComponent {
     return errorMsg
   }
 
-  ngDoCheck(){
+  ngDoCheck() {
     this.errorMsg = {
       img: this.invalidMessages('img'),
       name: this.invalidMessages('name'),
       brand: this.invalidMessages('brand'),
       category: this.invalidMessages('category'),
-      manualCategory: this.invalidMessages('manualCategory'),
       description: this.invalidMessages('description'),
       size: this.invalidMessages('size'),
       color: this.invalidMessages('color'),
@@ -100,8 +95,7 @@ export class NewProductComponent {
       name: '',
       brand: '',
       category: '',
-      description:'',
-      manualCategory:'',
+      description: '',
       size: '',
       color: '',
       price: '',
@@ -123,10 +117,6 @@ export class NewProductComponent {
       this.msg.category = this.errorMsg.category
     }
 
-    if (this.errorMsg.manualCategory) {
-      this.msg.manualCategory = this.errorMsg.manualCategory
-    }
-
     if (this.errorMsg.description) {
       this.msg.description = this.errorMsg.description
     }
@@ -145,11 +135,11 @@ export class NewProductComponent {
 
   }
 
-  isValid(inputName:string){
+  isValid(inputName: string) {
     return this.form.get(inputName)?.valid && this.form.get(inputName)?.dirty
   }
 
-  isInvalid(inputName:string){
+  isInvalid(inputName: string) {
     return !this.form.get(inputName)?.valid && this.form.get(inputName)?.dirty
   }
 

@@ -1,10 +1,13 @@
+import { LogGuardGuard } from './../../profile/log-guard.guard';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tap, catchError, Observable } from 'rxjs';
 import { IProductMsg } from '../../../Models/i-product-msg';
 import { ApiShopService } from '../../../Services/api-shop.service';
 import { IProduct } from '../../../Models/i-product';
+import { IProductResponse } from '../../../Models/i-product-response';
+import { IProductObj } from '../../../Models/i-product-obj';
 
 @Component({
   selector: 'app-edit-product',
@@ -13,30 +16,46 @@ import { IProduct } from '../../../Models/i-product';
 })
 export class EditProductComponent {
 
-  form! : FormGroup;
-  loading! : boolean;
-  somethingWrong! : boolean;
-  errorMsg!:IProductMsg;
-  msg!:IProductMsg;
+  form!: FormGroup;
+  loading!: boolean;
+  somethingWrong!: boolean;
+  errorMsg!: IProductMsg;
+  msg!: IProductMsg;
   match: boolean = false
   categories: string[] = [];
-  product!: IProduct;
+  productResponse!: IProductResponse;
+  productObj!: IProductObj;
+  product: IProduct = {
+    id: 0,
+    img: '',
+    name: '',
+    brand: '',
+    category: '',
+    description: '',
+    size: 0,
+    color: '',
+    price: 0,
+    OnSale: false
+  };
   showManualCategory: boolean = false;
+  id!: string | null;
 
   constructor(
     private formBuilder: FormBuilder,
     private apiShopService: ApiShopService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.apiShopService.product$.subscribe(res => {
-      if (res) this.product = res;
-    });
 
-    this.apiShopService.getAllCat().subscribe(res => {
-      this.categories = res
-    })
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+
+      this.apiShopService.getById(Number(this.id)).subscribe(data => {
+        this.product = data.obj;
+      });
+    });
 
     this.form = this.formBuilder.group({
 
@@ -44,7 +63,6 @@ export class EditProductComponent {
       name: this.formBuilder.control(this.product.name, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       brand: this.formBuilder.control(this.product.brand, [Validators.minLength(2), Validators.maxLength(20)]),
       category: this.formBuilder.control(this.product.category, [Validators.required]),
-      manualCategory:  this.formBuilder.control(''),
       description: this.formBuilder.control(this.product.description, [Validators.minLength(2)]),
       size: this.formBuilder.control(this.product.size, [Validators.minLength(2)]),
       color: this.formBuilder.control(this.product.color, [Validators.minLength(2)]),
@@ -54,22 +72,22 @@ export class EditProductComponent {
     })
   }
 
-  submit(){
-    this.loading=true;
+  submit() {
+    this.loading = true;
 
     this.form.value.size = Number(this.form.value.size);
     this.form.value.price = Number(this.form.value.price);
 
-    this.apiShopService.create(this.form.value)
-    .pipe(tap(()=>{
-      this.loading=false
-      this.router.navigate(['/account/products'])
-    }),catchError(error=>{
-      this.somethingWrong=true;
-      console.log(error);
+    this.apiShopService.update(this.form.value)
+      .pipe(tap(() => {
+        this.loading = false
+        this.router.navigate(['/account/products'])
+      }), catchError(error => {
+        this.somethingWrong = true;
+        console.log(error);
 
-      throw error;
-    })).subscribe();
+        throw error;
+      })).subscribe();
   }
 
   invalidMessages(fieldName: string): string {
@@ -85,13 +103,12 @@ export class EditProductComponent {
     return errorMsg
   }
 
-  ngDoCheck(){
+  ngDoCheck() {
     this.errorMsg = {
       img: this.invalidMessages('img'),
       name: this.invalidMessages('name'),
       brand: this.invalidMessages('brand'),
       category: this.invalidMessages('category'),
-      manualCategory: this.invalidMessages('manualCategory'),
       description: this.invalidMessages('description'),
       size: this.invalidMessages('size'),
       color: this.invalidMessages('color'),
@@ -103,8 +120,7 @@ export class EditProductComponent {
       name: '',
       brand: '',
       category: '',
-      manualCategory: '',
-      description:'',
+      description: '',
       size: '',
       color: '',
       price: '',
@@ -126,10 +142,6 @@ export class EditProductComponent {
       this.msg.category = this.errorMsg.category
     }
 
-    if (this.errorMsg.manualCategory) {
-      this.msg.manualCategory = this.errorMsg.manualCategory
-    }
-
     if (this.errorMsg.description) {
       this.msg.description = this.errorMsg.description
     }
@@ -148,11 +160,11 @@ export class EditProductComponent {
 
   }
 
-  isValid(inputName:string){
+  isValid(inputName: string) {
     return this.form.get(inputName)?.valid && this.form.get(inputName)?.dirty
   }
 
-  isInvalid(inputName:string){
+  isInvalid(inputName: string) {
     return !this.form.get(inputName)?.valid && this.form.get(inputName)?.dirty
   }
 

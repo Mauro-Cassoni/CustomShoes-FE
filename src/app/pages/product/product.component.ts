@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ApiShopService } from '../../Services/api-shop.service';
+import { IProduct } from '../../Models/i-product';
 
 @Component({
   selector: 'app-product',
@@ -6,5 +8,27 @@ import { Component } from '@angular/core';
   styleUrl: './product.component.scss'
 })
 export class ProductComponent {
+
+  constructor(
+    private apiSvc: ApiShopService,
+  ){}
+
+  products: IProduct[] = [];
+
+  ngOnInit() {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.apiSvc.getAll().subscribe(data => {
+      this.products = data.obj.content;
+    });
+  }
+
+  deleteProduct(id: number) {
+    this.apiSvc.deleteById(id).subscribe(() => {
+      this.loadProducts();
+    });
+  }
 
 }

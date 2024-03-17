@@ -1,8 +1,10 @@
+import { IProductObj } from './../Models/i-product-obj';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IProduct } from '../Models/i-product';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { IProductResponse } from '../Models/i-product-response';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +15,12 @@ export class ApiShopService {
     private http: HttpClient,
   ) { }
 
-  productSubject = new BehaviorSubject<IProduct | null>(null)
-  product$: Observable<IProduct | null> = this.productSubject.asObservable();
+  productSubject = new BehaviorSubject<IProductResponse | null>(null)
+  product$: Observable<IProductResponse | null> = this.productSubject.asObservable();
+  products: IProduct[] = [];
 
-  getAll(): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(`${environment.URL}/products`);
+  getAll(): Observable<IProductResponse> {
+    return this.http.get<IProductResponse>(`${environment.URL}/products`);
   }
 
   getByCat(category: string): Observable<IProduct[]> {
@@ -25,27 +28,13 @@ export class ApiShopService {
     return this.http.get<IProduct[]>(`${environment.URL}/products`, { params });
   }
 
-  getAllCat(): Observable<string[]> {
-    return this.getAll().pipe(
-      map(products => {
-        const categories: string[] = [];
-        products.forEach(product => {
-          if (!categories.includes(product.category)) {
-            categories.push(product.category);
-          }
-        });
-        return categories;
-      })
-    );
-  }
-
   searchByName(query: string, limit: number): Observable<IProduct[]> {
-    let params = new HttpParams().set('name_like', query).set('_limit', limit.toString());
+    const params = new HttpParams().set('name_like', query).set('_limit', limit.toString());
     return this.http.get<IProduct[]>(`${environment.URL}/products`, { params });
   }
 
-  create(product: Partial<IProduct>): Observable<IProduct> {
-    return this.http.post<IProduct>(`${environment.URL}/products/create`, product);
+  create(product: Partial<IProduct>): Observable<IProductObj> {
+    return this.http.post<IProductObj>(`${environment.URL}/products/create`, product);
   }
 
   update(product: IProduct): Observable<IProduct> {
@@ -53,11 +42,23 @@ export class ApiShopService {
   }
 
   deleteById(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.URL}/products/${id}`);
+    return this.http.delete<void>(`${environment.URL}/products/delete/${id}`);
   }
 
-  getById(id: number): Observable<IProduct> {
-    return this.http.get<IProduct>(`${environment.URL}/products/${id}`);
+  getById(id: number): Observable<IProductObj> {
+    return this.http.get<IProductObj>(`${environment.URL}/products/${id}`);
+  }
+
+  getAllCategories(): Observable<string[]> {
+    return this.getAll().pipe(
+      map((response: IProductResponse) => {
+        const categoriesSet = new Set<string>();
+        response.obj.content.forEach(product => {
+          categoriesSet.add(product.category);
+        });
+        return Array.from(categoriesSet);
+      })
+    );
   }
 
 }

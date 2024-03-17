@@ -2,24 +2,26 @@
 
   <h2 class="text-center my-3">Products</h2>
 
-  <div>
+  <div class="row justify-content-evenly">
+    <div class="col" *ngFor="let p of products">
 
-    <div class="card m-3 p-2" style="width: 16rem;">
-      <img class="img-card" src="https://picsum.photos/300/300?random=1" class="card-img-top" alt="product img">
-      <div class="card-body">
-        <h5 class="card-title">Name: </h5>
+      <div class="card my-3 p-2" style="width: 16rem;">
+        <img class="img-card" [src]="p.img" class="card-img-top" alt="product img">
+        <div class="card-body">
+          <h5 class="card-title">Name: {{p.name}}</h5>
+        </div>
+        <ul class="list-group-flush">
+          <li class="list-group-item">Brand: {{p.brand}}</li>
+          <li class="list-group-item">Category: {{p.category}}</li>
+          <li class="list-group-item">Price: {{p.price}}€</li>
+        </ul>
+        <div class="card-body">
+          <a class="btn" [routerLink]="['/edit-product', p.id]" class="card-link">Edit</a>
+          <a class="btn btn-danger" (click)="deleteProduct(p.id)" class="card-link">Delete</a>
+        </div>
       </div>
-      <ul class="list-group-flush">
-        <li class="list-group-item">Brand: </li>
-        <li class="list-group-item">Category: </li>
-        <li class="list-group-item">Price: </li>
-      </ul>
-      <div class="card-body">
-        <a class="btn" routerLink="" class="card-link">Edit</a>
-        <a class="btn btn-danger" routerLink="" class="card-link">Delete</a>
-      </div>
+
     </div>
-
   </div>
 
   <!-- menù products -->
