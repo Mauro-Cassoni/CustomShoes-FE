@@ -61,4 +61,10 @@ export class ApiShopService {
     );
   }
 
+  uploadImg(productId: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('upload', file);
+    return this.http.patch<any>(`${environment.URL}/products/upload/${productId}`, formData);
+  }
+
 }

@@ -1,1 +1,26 @@
-<p>home works!</p>
+<div class="container py-3">
+
+  <h2 class="text-center my-3">Products</h2>
+
+  <div class="row justify-content-evenly text-center">
+    <div class="col" *ngFor="let p of products">
+
+      <div class="card my-3 p-2" style="width: 16rem;">
+        <img *ngIf="p.img" class="img-card" [src]="p.img" class="card-img-top" alt="product img">
+        <img *ngIf="!p.img" id="img" class="img-card" src="../../../../assets/img/logo/CustomShoes.png" alt="placeholder image" >
+
+        <div class="card-body">
+          <h5 class="card-title"><span class="purple">Name: </span> <span class="pink">{{p.name}}</span></h5>
+        </div>
+        <ul class="list-group-flush">
+          <li class="list-group-item text-start"><span class="purple">Brand: </span> <span class="pink">{{p.brand}}</span></li>
+          <li class="list-group-item text-start"><span class="purple">Category: </span> <span class="pink">{{p.category}}</span></li>
+          <li class="list-group-item text-start"><span class="purple">Price: </span> <span class="pink">{{p.price}}€</span></li>
+        </ul>
+        <div class="card-body">
+          <a [routerLink]="['/product/edit-product', p.id]" class="card-link btn btn-purple">Add to cart</a>
+        </div>
+      </div>
+
+    </div>
+  </div>

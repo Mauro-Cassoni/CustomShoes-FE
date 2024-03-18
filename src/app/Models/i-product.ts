@@ -8,5 +8,5 @@ export interface IProduct {
   size: number;
   color: string;
   price: number;
-  OnSale: boolean;
+  onSale: boolean;
 }

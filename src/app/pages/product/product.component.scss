@@ -1,6 +1,6 @@
 a {
   text-decoration: none;
-  color: var(--my-pink);
+  color: white;
 }
 
 .btn-add{
@@ -14,4 +14,17 @@ a {
 
   height: 40px;
   width: 40px;
+}
+
+.pink{
+  color: var(--my-pink);
+}
+
+.purple{
+  color: var(--my-purple);
+}
+
+.btn-purple{
+  background-color: var(--my-purple);
+  color: white;
 }

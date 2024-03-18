@@ -8,6 +8,7 @@ import { ApiShopService } from '../../../Services/api-shop.service';
 import { IProduct } from '../../../Models/i-product';
 import { IProductResponse } from '../../../Models/i-product-response';
 import { IProductObj } from '../../../Models/i-product-obj';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-product',
@@ -35,10 +36,11 @@ export class EditProductComponent {
     size: 0,
     color: '',
     price: 0,
-    OnSale: false
+    onSale: false
   };
   showManualCategory: boolean = false;
   id!: string | null;
+  file!: File
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,20 +56,32 @@ export class EditProductComponent {
 
       this.apiShopService.getById(Number(this.id)).subscribe(data => {
         this.product = data.obj;
+
+        this.form.patchValue({
+          img: this.product.img,
+          name: this.product.name,
+          brand: this.product.brand,
+          category: this.product.category,
+          description: this.product.description,
+          size: this.product.size,
+          color: this.product.color,
+          price: this.product.price,
+          onSale: this.product.onSale
+        });
       });
     });
 
     this.form = this.formBuilder.group({
 
-      img: this.formBuilder.control(this.product.img, [Validators.required]),
-      name: this.formBuilder.control(this.product.name, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-      brand: this.formBuilder.control(this.product.brand, [Validators.minLength(2), Validators.maxLength(20)]),
-      category: this.formBuilder.control(this.product.category, [Validators.required]),
-      description: this.formBuilder.control(this.product.description, [Validators.minLength(2)]),
-      size: this.formBuilder.control(this.product.size, [Validators.minLength(2)]),
-      color: this.formBuilder.control(this.product.color, [Validators.minLength(2)]),
-      price: this.formBuilder.control(this.product.price, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]),
-      onSale: this.formBuilder.control(this.product.OnSale, [Validators.required])
+      img: this.formBuilder.control(null, []),
+      name: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+      brand: this.formBuilder.control(null, [Validators.minLength(2), Validators.maxLength(20)]),
+      category: this.formBuilder.control(null, [Validators.required]),
+      description: this.formBuilder.control(null, [Validators.minLength(2)]),
+      size: this.formBuilder.control(null, [Validators.minLength(2)]),
+      color: this.formBuilder.control(null, [Validators.minLength(2)]),
+      price: this.formBuilder.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]),
+      onSale: this.formBuilder.control(null, [])
 
     })
   }
@@ -75,13 +89,23 @@ export class EditProductComponent {
   submit() {
     this.loading = true;
 
+    this.product.img = this.form.value.img,
+    this.product.name = this.form.value.name,
+    this.product.brand = this.form.value.brand,
+    this.product.category = this.form.value.category,
+    this.product.description = this.form.value.description,
+    this.product.size = this.form.value.size,
+    this.product.color = this.form.value.color,
+    this.product.price = this.form.value.price,
+    this.product.onSale = this.form.value.onSale,
+
     this.form.value.size = Number(this.form.value.size);
     this.form.value.price = Number(this.form.value.price);
 
-    this.apiShopService.update(this.form.value)
+    this.apiShopService.update(this.product)
       .pipe(tap(() => {
         this.loading = false
-        this.router.navigate(['/account/products'])
+        this.router.navigate(['/product'])
       }), catchError(error => {
         this.somethingWrong = true;
         console.log(error);
@@ -166,6 +190,37 @@ export class EditProductComponent {
 
   isInvalid(inputName: string) {
     return !this.form.get(inputName)?.valid && this.form.get(inputName)?.dirty
+  }
+
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+  }
+
+  setImg() {
+    if (this.file) {
+      this.apiShopService.uploadImg(Number(this.id), this.file)
+        .pipe(
+          tap(() => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Image uploaded successfully',
+            });
+          }),
+          catchError(error => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error loading image',
+              text: error.message
+            });
+            throw error;
+          })
+        ).subscribe();
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No file selected',
+      });
+    }
   }
 
 }

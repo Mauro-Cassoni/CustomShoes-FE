@@ -6,12 +6,14 @@ import { ProductComponent } from './product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DetailProductComponent } from './detail-product/detail-product.component';
 
 
 @NgModule({
   declarations: [
     ProductComponent,
     EditProductComponent,
+    DetailProductComponent,
   ],
   imports: [
     CommonModule,

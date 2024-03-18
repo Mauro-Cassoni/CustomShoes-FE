@@ -2,22 +2,27 @@
 
   <h2 class="text-center my-3">Products</h2>
 
-  <div class="row justify-content-evenly">
+  <div class="row justify-content-evenly text-center">
     <div class="col" *ngFor="let p of products">
 
       <div class="card my-3 p-2" style="width: 16rem;">
-        <img class="img-card" [src]="p.img" class="card-img-top" alt="product img">
+        <img *ngIf="p.img" class="img-card" [src]="p.img" class="card-img-top" alt="product img">
+        <img *ngIf="!p.img" id="img" class="img-card" src="../../../../assets/img/logo/CustomShoes.png" alt="placeholder image" >
+
         <div class="card-body">
-          <h5 class="card-title">Name: {{p.name}}</h5>
+          <h5 class="card-title"><span class="purple">Name: </span> <span class="pink">{{p.name}}</span></h5>
         </div>
         <ul class="list-group-flush">
-          <li class="list-group-item">Brand: {{p.brand}}</li>
-          <li class="list-group-item">Category: {{p.category}}</li>
-          <li class="list-group-item">Price: {{p.price}}€</li>
+          <li class="list-group-item text-start"><span class="purple">Brand: </span>{{p.brand}}</li>
+          <li class="list-group-item text-start"><span class="purple">Category: </span>{{p.category}}</li>
+          <li class="list-group-item text-start"><span class="purple">Price: </span>{{p.price}}€</li>
+          <li class="list-group-item text-start"><span class="purple">On sale: </span>
+            <i *ngIf="p.onSale === false" class="bi bi-stop-fill text-danger"></i>
+            <i *ngIf="p.onSale === true" class="bi bi-stop-fill text-success"></i></li>
         </ul>
         <div class="card-body">
-          <a class="btn" [routerLink]="['/edit-product', p.id]" class="card-link">Edit</a>
-          <a class="btn btn-danger" (click)="deleteProduct(p.id)" class="card-link">Delete</a>
+          <a [routerLink]="['/product/edit-product', p.id]" class="card-link btn btn-purple">Edit</a>
+          <a (click)="deleteProduct(p.id)" class="card-link btn btn-danger">Delete</a>
         </div>
       </div>
 
