@@ -5,7 +5,7 @@
   <div class="row justify-content-evenly text-center">
     <div class="col" *ngFor="let p of products">
 
-      <div class="card my-3 p-2" style="width: 16rem;">
+      <div class="card my-3 p-2" style="width: 16rem;" [routerLink]="['/product/detail-product', p.id]">
         <img *ngIf="p.img" class="img-card" [src]="p.img" class="card-img-top" alt="product img">
         <img *ngIf="!p.img" id="img" class="img-card" src="../../../../assets/img/logo/CustomShoes.png" alt="placeholder image" >
 

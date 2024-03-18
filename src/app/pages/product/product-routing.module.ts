@@ -4,6 +4,7 @@ import { ProductComponent } from './product.component';
 import { NewProductComponent } from './new-product/new-product.component';
 import { AuthGuard } from '../profile/auth.guard';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { DetailProductComponent } from './detail-product/detail-product.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,12 @@ const routes: Routes = [
     path: 'edit-product/:id',
     component: EditProductComponent,
     title: 'Edit Product - CustomShoes',
+    canActivate:[AuthGuard]
+  },
+  {
+    path: 'detail-product/:id',
+    component: DetailProductComponent,
+    title: 'Detail Product - CustomShoes',
     canActivate:[AuthGuard]
   },
 ];
