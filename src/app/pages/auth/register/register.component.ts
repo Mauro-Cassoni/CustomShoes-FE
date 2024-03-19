@@ -14,7 +14,7 @@ import { IRegisterData } from '../../../Models/auth/i-register-data';
 export class RegisterComponent {
 
   form! : FormGroup;
-  userTypes = Object.values(UserType);
+  userTypes : UserType[] = Object.values(UserType);
   loading! : boolean;
   somethingWrong! : boolean;
   errorMsg!:IRegisterData;

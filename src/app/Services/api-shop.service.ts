@@ -20,7 +20,7 @@ export class ApiShopService {
   products: IProduct[] = [];
 
   getAll(): Observable<IProductResponse> {
-    return this.http.get<IProductResponse>(`${environment.URL}/products`);
+    return this.http.get<IProductResponse>(`${environment.URL}/products/no-auth`);
   }
 
   getByCat(category: string): Observable<IProduct[]> {
@@ -46,7 +46,7 @@ export class ApiShopService {
   }
 
   getById(id: number): Observable<IProductObj> {
-    return this.http.get<IProductObj>(`${environment.URL}/products/${id}`);
+    return this.http.get<IProductObj>(`${environment.URL}/products/no-auth/${id}`);
   }
 
   getAllCategories(): Observable<string[]> {

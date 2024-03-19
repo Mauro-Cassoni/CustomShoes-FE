@@ -26,7 +26,6 @@ const routes: Routes = [
     path: 'detail-product/:id',
     component: DetailProductComponent,
     title: 'Detail Product - CustomShoes',
-    canActivate:[AuthGuard]
   },
 ];
 
