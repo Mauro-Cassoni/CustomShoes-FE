@@ -28,3 +28,18 @@ a {
   background-color: var(--my-purple);
   color: white;
 }
+
+.product-image{
+  width: 238px;
+  height: 238px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.card{
+  transition: 0.5s;
+  &:hover{
+    transform: scale(1.1);
+  }
+}

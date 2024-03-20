@@ -2,12 +2,12 @@
 
   <h2 class="text-center my-3">Products</h2>
 
-  <div class="row justify-content-evenly text-center">
-    <div class="col" *ngFor="let p of products">
+  <div class="row text-center">
+    <div class="col d-flex justify-content-center" *ngFor="let p of products">
 
       <div class="card my-3 p-2" style="width: 16rem;">
-        <img *ngIf="p.img" class="img-card" [src]="p.img" class="card-img-top" alt="product img">
-        <img *ngIf="!p.img" id="img" class="img-card" src="../../../../assets/img/logo/CustomShoes.png" alt="placeholder image" >
+        <div *ngIf="p.img" class="product-image rounded border border-primary" [ngStyle]="{'background-image': 'url(' + p.img + ')'}"></div>
+        <img *ngIf="!p.img" id="img" class="img-card rounded border border-primary" src="../../../../assets/img/logo/CustomShoes.png" alt="placeholder image" >
 
         <div class="card-body">
           <h5 class="card-title"><span class="purple">Name: </span> <span class="pink">{{p.name}}</span></h5>

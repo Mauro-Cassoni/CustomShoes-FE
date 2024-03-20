@@ -1,15 +1,17 @@
+@import '../../styles/custom-colors';
+@import '../../../../node_modules/bootstrap/scss/bootstrap.scss';
+
 img {
   height: 40px;
+
+  @media(min-width: 768px) {
+    height: 50px;
+  }
 }
 
 .navbar,
 .mobile-navbar {
-  background-color: var(--my-purple);
   z-index: 100;
-}
-
-.navbar-toggler-icon {
-  color: var(--my-pink);
 }
 
 .mobile-navbar {
@@ -19,26 +21,18 @@ img {
   width: 100vw;
 }
 
-.mobile-form{
+.mobile-form {
   width: 67vw;
 }
 
 .btnProfile {
   border: none;
-  color: var(--my-pink);
   font-size: 1.5rem;
   transition: 0.5s;
   cursor: pointer;
 
   &:hover {
-    color: white;
-  }
-}
-
-.form-control {
-  &:focus, &:focus-visible {
-    border-color: var(--my-pink);
-    box-shadow: 0 0 0 0.25rem rgb(208, 39, 60);
+    color: $light;
   }
 }
 
@@ -55,8 +49,9 @@ img {
   transform: translateX(-78%);
 }
 
-@media screen and (min-width: 768px) {
-  img {
-    height: 50px;
-  }
+.btn:active,
+.btn:focus,
+.btnProfile:focus-visible {
+  border: none;
+  outline: 0;
 }

@@ -101,10 +101,9 @@ export class EditComponent {
       this.form.value.pec = this.form.value.pec.toLowerCase();
     }
 
-    this.authService.register(this.form.value)
+    this.authService.update(this.user.user.id,this.form.value)
       .pipe(tap(() => {
         this.loading = false
-        this.router.navigate(['auth/login'])
       }), catchError(error => {
         this.somethingWrong = true;
         console.log(error);

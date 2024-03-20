@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
+@import './app/styles/custom-colors';
 @import 'bootstrap/scss/bootstrap';
 @import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
@@ -8,10 +9,9 @@
 *{
   font-family: "Roboto", sans-serif;
   box-sizing: border-box;
+  color: $light;
 }
 
-
-:root{
-  --my-purple: #392940;
-  --my-pink: #d0273c;
+body{
+  background-color: $dark;
 }
