@@ -1,35 +1,49 @@
+@import '../../styles/custom-colors';
+
 a {
   text-decoration: none;
-  color: white;
 }
 
-.btn-add{
-  background-color: var(--my-purple);
+.btn-gear,
+.btn-add,
+.btn-filter {
   position: fixed;
-  bottom: 70px;
-  right: 10px;
-  font-size: 2rem;
-  line-height: 40px;
   z-index: 10;
-
   height: 40px;
   width: 40px;
 }
 
-.pink{
-  color: var(--my-pink);
+.btn-gear,
+.btn-filter {
+  font-size: 1.5rem;
+  line-height: 43px;
 }
 
-.purple{
-  color: var(--my-purple);
+
+.btn-gear {
+  bottom: 70px;
+  right: 10px;
 }
 
-.btn-purple{
-  background-color: var(--my-purple);
-  color: white;
+.btn-add {
+  line-height: 40px;
+  font-size: 2rem;
+  right: -45px;
+  bottom: 120px;
+  transition: right 0.5s ease;
 }
 
-.product-image{
+.btn-filter {
+  right: -45px;
+  bottom: 170px;
+  transition: right 1.0s ease;
+}
+
+.open {
+  right: 10px;
+}
+
+.product-image {
   width: 238px;
   height: 238px;
   background-repeat: no-repeat;
@@ -37,9 +51,19 @@ a {
   background-position: center;
 }
 
-.card{
+.img-card {
+  width: 238px;
+  height: 238px;
+}
+
+.card {
   transition: 0.5s;
-  &:hover{
+
+  &:hover {
     transform: scale(1.1);
+  }
+
+  .visible {
+    right: 20px;
   }
 }

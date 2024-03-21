@@ -1,9 +1,4 @@
-.btn-purple {
-  background-color: var(--my-purple);
-  color: white;
-}
-
-.product-image{
+.product-image {
   width: 238px;
   height: 238px;
   background-repeat: no-repeat;
@@ -11,9 +6,59 @@
   background-position: center;
 }
 
-.card{
+.card {
   transition: 0.5s;
-  &:hover{
+
+  &:hover {
     transform: scale(1.04);
+  }
+
+}
+
+.banner {
+  top: 25%;
+}
+
+.central-text {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+
+  @media (min-width: 375px) {
+    font-size: 1.8rem;
+  }
+
+  @media (min-width: 425px) {
+    font-size: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 4rem;
+  }
+}
+
+.scroll {
+  right: 10%;
+  top: 90%;
+  transform: rotate(-90deg);
+  animation: moveUpDown 3s ease infinite;
+  font-size: 1rem;
+  @media (min-width: 1920px) {
+  font-size: 1.7rem;
+  }
+}
+
+@keyframes moveUpDown {
+  0%,
+  100% {
+    top: 90%;
+  }
+  50% {
+    top: 70%;
   }
 }

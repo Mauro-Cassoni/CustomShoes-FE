@@ -1,12 +1,12 @@
 <div class="container py-3">
   <form [formGroup]="form" (ngSubmit)="login()" >
 
-    <h2  class="text-center my-3">Login</h2>
+    <h2  class="text-center my-3 text-info">Login</h2>
 
           <!-- email -->
           <div class="col-md-6">
             <label for="email">Email *</label>
-            <input type="email" id="email" class="form-control" formControlName="email"
+            <input type="email" id="email" class="form-control bg-light bg-light" formControlName="email"
               [ngClass]="{'is-valid': isValid('email'), 'is-invalid': isInvalid('email')}">
             <div class="error-msg">
               <span *ngIf="form.controls['email'].dirty"
@@ -18,7 +18,7 @@
           <!-- password -->
           <div class="col-md-6">
             <label for="password">Password *</label>
-            <input type="password" id="password" class="form-control" formControlName="password"
+            <input type="password" id="password" class="form-control bg-light" formControlName="password"
               [ngClass]="{'is-valid': isValid('password'), 'is-invalid': isInvalid('password')}">
 
             <span *ngIf="form.controls['password'].dirty"
@@ -27,13 +27,13 @@
             <div class="error-msg"></div>
           </div>
 
-      <button [disabled]="!form.valid" class="btn btn-sign-in" type="submit">Login</button>
+      <button [disabled]="!form.valid" class="btn btn-secondary" type="submit">Login</button>
 
   </form>
 
   <div class="my-3">
     <span>Are you not registered yet? Go to </span>
-    <a type="submit" routerLink="../../auth/login">
+    <a class="text-secondary" type="submit" routerLink="../../auth/login">
       Sign up
     </a>
   </div>

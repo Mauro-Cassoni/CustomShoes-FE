@@ -14,6 +14,7 @@ export class ProductComponent {
   ){}
 
   products: IProduct[] = [];
+  open: boolean = false;
 
   ngOnInit() {
     this.loadProducts();

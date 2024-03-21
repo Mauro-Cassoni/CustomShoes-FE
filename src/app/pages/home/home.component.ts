@@ -18,6 +18,7 @@ export class HomeComponent {
   ngOnInit() {
     this.loadProducts();
   }
+
   loadProducts() {
     this.apiSvc.getAll().subscribe(data => {
       this.products = data.obj.content.filter(product => product.onSale === true);

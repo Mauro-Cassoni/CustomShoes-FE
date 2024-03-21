@@ -2,13 +2,13 @@
   <div>
     <form [formGroup]="form" (ngSubmit)="submit()">
 
-      <h2 class="text-center my-3">Edit Profile</h2>
+      <h2 class="text-center my-3 text-info">Edit Profile</h2>
 
             <!-- User Type -->
             <div class="col-md-6">
               <label for="userType">User Type *</label>
-              <select id="userType" class="form-control" formControlName="userType">
-                <option *ngFor="let type of userTypes" [value]="type">{{ type }}</option>
+              <select id="userType" class="form-control bg-light" formControlName="userType">
+                <option class="bg-light text-dark" *ngFor="let type of userTypes" [value]="type">{{ type }}</option>
               </select>
               <div class="error-msg">
                 <span *ngIf="form.controls['userType'].dirty"
@@ -20,7 +20,7 @@
       <!-- name -->
       <div class="col-md-6">
         <label for="name">Name *</label>
-        <input type="text" id="name" class="form-control" formControlName="name"
+        <input type="text" id="name" class="form-control bg-light" formControlName="name"
           [ngClass]="{'is-valid': isValid('name'), 'is-invalid': isInvalid('name')}">
         <div class="error-msg">
           <span *ngIf="form.controls['name'].dirty"
@@ -32,7 +32,7 @@
       <!-- surname -->
       <div class="col-md-6">
         <label for="surname">Surname *</label>
-        <input type="text" id="surname" class="form-control" formControlName="surname"
+        <input type="text" id="surname" class="form-control bg-light" formControlName="surname"
           [ngClass]="{'is-valid': isValid('surname'), 'is-invalid': isInvalid('surname')}">
         <div class="error-msg">
           <span *ngIf="form.controls['surname'].dirty"
@@ -47,7 +47,7 @@
         <!-- Business Name -->
         <div class="col-md-6">
           <label for="businessName">Business name *</label>
-          <input type="text" id="businessName" class="form-control" formControlName="businessName"
+          <input type="text" id="businessName" class="form-control bg-light" formControlName="businessName"
             [ngClass]="{'is-valid': isValid('businessName'), 'is-invalid': isInvalid('businessName')}">
           <div class="error-msg">
             <span *ngIf="form.controls['businessName'].dirty"
@@ -59,7 +59,7 @@
         <!-- Vat Number -->
         <div class="col-md-6">
           <label for="businessName">Vat number *</label>
-          <input type="text" id="vatNumber" class="form-control" formControlName="vatNumber"
+          <input type="text" id="vatNumber" class="form-control bg-light" formControlName="vatNumber"
             [ngClass]="{'is-valid': isValid('vatNumber'), 'is-invalid': isInvalid('vatNumber')}">
           <div class="error-msg">
             <span *ngIf="form.controls['vatNumber'].dirty"
@@ -71,7 +71,7 @@
         <!-- Pec -->
         <div class="col-md-6">
           <label for="pec">Pec *</label>
-          <input type="email" id="pec" class="form-control" formControlName="pec"
+          <input type="email" id="pec" class="form-control bg-light" formControlName="pec"
             [ngClass]="{'is-valid': isValid('pec'), 'is-invalid': isInvalid('pec')}">
           <div class="error-msg">
             <span *ngIf="form.controls['pec'].dirty"
@@ -83,7 +83,7 @@
         <!-- SDI -->
         <div class="col-md-6">
           <label for="sdi">SDI *</label>
-          <input type="email" id="sdi" class="form-control" formControlName="sdi"
+          <input type="email" id="sdi" class="form-control bg-light" formControlName="sdi"
             [ngClass]="{'is-valid': isValid('sdi'), 'is-invalid': isInvalid('sdi')}">
           <div class="error-msg">
             <span *ngIf="form.controls['sdi'].dirty"
@@ -94,7 +94,7 @@
 
       </div>
 
-      <button class="btn btn-sign-in" type="submit">Send</button>
+      <button class="btn btn-secondary" type="submit">Send</button>
 
     </form>
 
