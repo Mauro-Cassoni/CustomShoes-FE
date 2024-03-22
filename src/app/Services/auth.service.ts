@@ -69,6 +69,4 @@ export class AuthService {
     this.authSubject.next(accessData);
   }
 
-
-
 }

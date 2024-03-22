@@ -1,3 +1,4 @@
+import { IAddress } from './../../../Models/i-address';
 import { Component } from '@angular/core';
 import { ApiShopService } from '../../../Services/api-shop.service';
 import { AuthService } from '../../../Services/auth.service';
@@ -7,6 +8,7 @@ import { catchError, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserType } from '../../../Enums/user-type';
 import { IRegisterData } from '../../../Models/auth/i-register-data';
+import { Role } from '../../../Enums/role';
 
 @Component({
   selector: 'app-edit',
@@ -22,7 +24,29 @@ export class EditComponent {
   errorMsg!: IRegisterData;
   msg!: IRegisterData;
   match: boolean = false
-  user!: IAuthData;
+  user: IAuthData ={
+    token: '',
+    user: {
+      id: 0,
+      email: '',
+      password: '',
+      name: '',
+      surname: '',
+      phoneNumber: '',
+      userType: UserType.CUSTOMER,
+      wishlist: [],
+      role: Role.USER,
+      businessName: '',
+      vatNumber: '',
+      insertionDate: '',
+      pec: '',
+      sdi: '',
+      invoices: [],
+      shippingAddress: undefined,
+      registeredOfficeAddress: undefined,
+      operationalHeadquartersAddress: undefined
+    }
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,6 +58,8 @@ export class EditComponent {
   ngOnInit() {
     this.authService.user$.subscribe(res => {
       if (res) this.user = res;
+      console.log(this.user);
+
     });
 
     this.form = this.formBuilder.group({
@@ -91,15 +117,11 @@ export class EditComponent {
   }
 
   submit() {
+
     this.loading = true;
     this.form.value.name = this.form.value.name.charAt(0).toUpperCase() + this.form.value.name.slice(1).toLowerCase();
     this.form.value.surname = this.form.value.surname.charAt(0).toUpperCase() + this.form.value.surname.slice(1).toLowerCase();
     this.form.value.email = this.form.value.email.toLowerCase();
-
-    delete this.form.value.confirmPassword;
-    if (this.form.value.userType === 'BUSINESS') {
-      this.form.value.pec = this.form.value.pec.toLowerCase();
-    }
 
     this.authService.update(this.user.user.id,this.form.value)
       .pipe(tap(() => {

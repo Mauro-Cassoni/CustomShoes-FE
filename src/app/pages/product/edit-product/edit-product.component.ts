@@ -38,7 +38,6 @@ export class EditProductComponent {
     price: 0,
     onSale: false
   };
-  showManualCategory: boolean = false;
   id!: string | null;
   file!: File
 
@@ -99,7 +98,6 @@ export class EditProductComponent {
     this.product.price = this.form.value.price,
     this.product.onSale = this.form.value.onSale,
 
-    this.form.value.size = Number(this.form.value.size);
     this.form.value.price = Number(this.form.value.price);
 
     this.apiShopService.update(this.product)

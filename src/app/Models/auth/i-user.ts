@@ -11,17 +11,17 @@ export interface IUser {
   name: string;
   surname: string;
   phoneNumber: string;
-  userType: UserType;
+  userType?: UserType;
 
   wishlist: IProduct[];
-  role: Role;
-  shippingAddress: IAddress;
+  role?: Role;
+  shippingAddress?: IAddress;
   businessName: string;
   vatNumber: string;
   insertionDate: string;
   pec: string;
   sdi: string;
-  registeredOfficeAddress: IAddress;
-  operationalHeadquartersAddress: IAddress;
+  registeredOfficeAddress?: IAddress;
+  operationalHeadquartersAddress?: IAddress;
   invoices: IInvoice[];
 }

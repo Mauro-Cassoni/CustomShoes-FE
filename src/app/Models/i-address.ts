@@ -1,11 +1,11 @@
 export interface IAddress {
-  id : number;
-  firstname : string;
-  lastname : string;
+  id ?: number;
+  name : string;
+  surname : string;
   street : string;
   streetNumber : string;
   city : string;
-  postalCode : number;
+  postalCode : string;
   country : string;
   province : string;
   municipality : string;
