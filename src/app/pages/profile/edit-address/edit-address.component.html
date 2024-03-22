@@ -5,7 +5,7 @@
     <h2 class="text-center my-3 text-info">Edit Addresses</h2>
 
 
-    <h3 class="text-center my-3 text-info">Shipping Address</h3>
+    <h3 class="text-center my-3 text-info">Shipping address</h3>
 
     <!-- name -->
     <div class="col-md-7">
@@ -124,17 +124,15 @@
           class="ms-1 text-danger">{{msg.phoneNumber}}</span>
       </div>
     </div>
-
 
   </div>
 
 
-
   <!-- Business section -->
-  <div *ngIf="form.controls['userType'].value === 'BUSINESS'">
+  <div *ngIf="user.user.userType === 'BUSINESS'">
 
 
-    <h3 class="text-center my-3 text-info">Shipping Address</h3>
+    <h3 class="text-center my-3 text-info">Registered office address</h3>
 
     <!-- name -->
     <div class="col-md-7">
@@ -255,7 +253,7 @@
     </div>
 
 
-    <h3 class="text-center my-3 text-info">Shipping Address</h3>
+    <h3 class="text-center my-3 text-info">Operational headquarters address</h3>
 
     <!-- name -->
     <div class="col-md-7">

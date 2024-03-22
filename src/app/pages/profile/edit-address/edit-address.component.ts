@@ -5,6 +5,8 @@ import { tap, catchError } from 'rxjs';
 import { IRegisterData } from '../../../Models/auth/i-register-data';
 import { AuthService } from '../../../Services/auth.service';
 import { IAddress } from '../../../Models/i-address';
+import { IAuthData } from '../../../Models/auth/i-auth-data';
+import { UserType } from '../../../Enums/user-type';
 
 @Component({
   selector: 'app-edit-address',
@@ -19,6 +21,9 @@ export class EditAddressComponent {
   errorMsg!: IAddress;
   msg!: IAddress;
   match: boolean = false
+  user!: IAuthData;
+  userTypes = Object.values(UserType);
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,6 +32,11 @@ export class EditAddressComponent {
   ) { }
 
   ngOnInit() {
+
+    this.authService.user$.subscribe(res => {
+      if (res) this.user = res;
+      console.log(this.user);
+    });
     this.form = this.formBuilder.group({
 
       name: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),

@@ -58,8 +58,6 @@ export class EditComponent {
   ngOnInit() {
     this.authService.user$.subscribe(res => {
       if (res) this.user = res;
-      console.log(this.user);
-
     });
 
     this.form = this.formBuilder.group({
