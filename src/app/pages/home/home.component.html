@@ -34,11 +34,11 @@
           <li class="list-group-item text-start"><span class="text-primary">Brand: </span> <span>{{p.brand}}</span></li>
           <li class="list-group-item text-start"><span class="text-primary">Category: </span>
             <span>{{p.category}}</span></li>
-          <li class="list-group-item text-start"><span class="text-primary">Price: </span> <span>{{p.price}}€</span>
+          <li class="list-group-item text-start"><span class="text-primary">Price: </span> <span>{{p.price | number:'1.2-2' }}€</span>
           </li>
         </ul>
         <div class="card-body">
-          <a [routerLink]="['/product/edit-product', p.id]" class="card-link btn btn-secondary">Add to cart</a>
+          <a (click)="addToCart($event, p.id)" class="card-link btn btn-secondary">Add to cart</a>
         </div>
       </div>
 

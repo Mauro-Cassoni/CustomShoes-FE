@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { tap, catchError } from 'rxjs';
-import { IRegisterData } from '../../../Models/auth/i-register-data';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../Services/auth.service';
 import { IAddress } from '../../../Models/i-address';
 import { IAuthData } from '../../../Models/auth/i-auth-data';
 import { UserType } from '../../../Enums/user-type';
+import { AddressService } from '../../../Services/address.service';
 
 @Component({
   selector: 'app-edit-address',
@@ -28,139 +26,92 @@ export class EditAddressComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private addressService: AddressService,
   ) { }
 
   ngOnInit() {
 
     this.authService.user$.subscribe(res => {
       if (res) this.user = res;
-      console.log(this.user);
-    });
-    this.form = this.formBuilder.group({
 
-      name: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),
-      surname: this.formBuilder.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(15), Validators.pattern(/^[a-zA-Z\s']*$/)]),
-      street: this.formBuilder.control(null, [Validators.required]),
-      streetNumber: this.formBuilder.control(null, [Validators.required]),
-      city: this.formBuilder.control(null, [Validators.required]),
-      postalCode: this.formBuilder.control(null, [Validators.required]),
-      country: this.formBuilder.control(null, [Validators.required]),
-      province: this.formBuilder.control(null, [Validators.required]),
-      municipality: this.formBuilder.control(null, [Validators.required]),
-      phoneNumber: this.formBuilder.control(null, [Validators.required]),
+      this.addressService.getUserAddresses().subscribe(addresses => {
+        if (addresses.length > 0) {
+          this.form.patchValue({
+            shippingAddress: addresses[0],
+            registeredOfficeAddress: addresses[1],
+            operationalHeadquartersAddress: addresses[2]
+          });
+        }
+      });
+    });
+
+    this.form = this.formBuilder.group({
+      shippingAddress: this.formBuilder.group({
+        name: ['', [Validators.required]],
+        surname: ['', [Validators.required]],
+        street: ['', [Validators.required]],
+        streetNumber: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        postalCode: ['', [Validators.required]],
+        country: ['', [Validators.required]],
+        province: ['', [Validators.required]],
+        municipality: ['', [Validators.required]],
+        phoneNumber: ['', [Validators.required]],
+      }),
+
+      registeredOfficeAddress: this.formBuilder.group({
+        name: ['', [Validators.required]],
+        surname: ['', [Validators.required]],
+        street: ['', [Validators.required]],
+        streetNumber: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        postalCode: ['', [Validators.required]],
+        country: ['', [Validators.required]],
+        province: ['', [Validators.required]],
+        municipality: ['', [Validators.required]],
+        phoneNumber: ['', [Validators.required]],
+      }),
+
+      operationalHeadquartersAddress: this.formBuilder.group({
+        name: ['', [Validators.required]],
+        surname: ['', [Validators.required]],
+        street: ['', [Validators.required]],
+        streetNumber: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        postalCode: ['', [Validators.required]],
+        country: ['', [Validators.required]],
+        province: ['', [Validators.required]],
+        municipality: ['', [Validators.required]],
+        phoneNumber: ['', [Validators.required]],
+      }),
     })
+
   }
 
   submit() {
+    if (this.form.invalid) {
+      return;
+    }
+
     this.loading = true;
-    this.form.value.name = this.form.value.name.charAt(0).toUpperCase() + this.form.value.name.slice(1).toLowerCase();
-    this.form.value.surname = this.form.value.surname.charAt(0).toUpperCase() + this.form.value.surname.slice(1).toLowerCase();
 
-    this.authService.register(this.form.value)
-      .pipe(tap(() => {
-        this.loading = false
-      }), catchError(error => {
-        this.somethingWrong = true;
-        console.log(error);
+    if (this.user.user.userType === 'BUSINESS') {
+      const shippingAddressId = this.user.user.shippingAddress ? this.user.user.shippingAddress.id : null;
+      const registeredOfficeAddressId = this.user.user.registeredOfficeAddress ? this.user.user.registeredOfficeAddress.id : null;
+      const operationalHeadquartersAddressId = this.user.user.operationalHeadquartersAddress ? this.user.user.operationalHeadquartersAddress.id : null;
 
-        throw error;
-      })).subscribe();
-  }
+      if (shippingAddressId && registeredOfficeAddressId && operationalHeadquartersAddressId) {
+        this.addressService.updateAddress(shippingAddressId, this.form.value.shippingAddress).subscribe();
+        this.addressService.updateAddress(registeredOfficeAddressId, this.form.value.registeredOfficeAddress).subscribe();
+        this.addressService.updateAddress(operationalHeadquartersAddressId, this.form.value.operationalHeadquartersAddress).subscribe();
+      } else {
 
-  invalidMessages(fieldName: string): string {
-    const field: AbstractControl | null = this.form.get(fieldName)
-    let errorMsg: string = ''
-    if (field) {
-      if (field.errors) {
-        if (field.errors['required']) errorMsg = 'Empty field'
-        if (field.errors['minlength'] && (fieldName === 'name' || fieldName === 'surname')) errorMsg = 'Minimum length: 2 characters'
-        if (field.errors['maxlength'] && (fieldName === 'name' || fieldName === 'surname')) errorMsg = 'Maximum length: 15 characters'
-        if (field.errors['pattern'] && (fieldName === 'name' || fieldName === 'surname')) errorMsg = 'Only letters of the alphabet are allowed'
       }
+    } else {
+      this.addressService.createAddress(this.form.value).subscribe();
     }
-    return errorMsg
   }
 
-  ngDoCheck() {
 
-    this.form.updateValueAndValidity();
-
-    this.errorMsg = {
-
-      name: this.invalidMessages('name'),
-      surname: this.invalidMessages('surname'),
-      street: this.invalidMessages('street'),
-      streetNumber: this.invalidMessages('streetNumber'),
-      city: this.invalidMessages('city'),
-      postalCode: this.invalidMessages('postalCode'),
-      country: this.invalidMessages('country'),
-      province: this.invalidMessages('province'),
-      municipality: this.invalidMessages('municipality'),
-      phoneNumber: this.invalidMessages('phoneNumber'),
-    }
-
-    this.msg = {
-      name: '',
-      surname: '',
-      street: '',
-      streetNumber: '',
-      city: '',
-      postalCode: '',
-      country: '',
-      province: '',
-      municipality: '',
-      phoneNumber: '',
-    }
-
-    if (this.errorMsg.name) {
-      this.msg.name = this.errorMsg.name
-    }
-
-    if (this.errorMsg.surname) {
-      this.msg.surname = this.errorMsg.surname
-    }
-
-    if (this.errorMsg.street) {
-      this.msg.street = this.errorMsg.street
-    }
-
-    if (this.errorMsg.streetNumber) {
-      this.msg.streetNumber = this.errorMsg.streetNumber
-    }
-
-    if (this.errorMsg.city) {
-      this.msg.city = this.errorMsg.city
-    }
-
-    if (this.errorMsg.postalCode) {
-      this.msg.postalCode = this.errorMsg.postalCode
-    }
-
-    if (this.errorMsg.country) {
-      this.msg.country = this.errorMsg.country
-    }
-
-    if (this.errorMsg.province) {
-      this.msg.province = this.errorMsg.province
-    }
-
-    if (this.errorMsg.municipality) {
-      this.msg.municipality = this.errorMsg.municipality
-    }
-
-    if (this.errorMsg.phoneNumber) {
-      this.msg.phoneNumber = this.errorMsg.phoneNumber
-    }
-
-  }
-
-  isValid(inputName: string) {
-    return this.form.get(inputName)?.valid && this.form.get(inputName)?.dirty
-  }
-
-  isInvalid(inputName: string) {
-    return !this.form.get(inputName)?.valid && this.form.get(inputName)?.dirty
-  }
 
 }

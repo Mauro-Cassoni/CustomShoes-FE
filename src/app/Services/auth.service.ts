@@ -61,12 +61,17 @@ export class AuthService {
   }
 
   restoreUser() {
-    const userJson: string | null = localStorage.getItem('authData');
+    let userJson: string | null = localStorage.getItem('authData');
     if (!userJson) return;
-    const accessData: IAuthData = JSON.parse(userJson);
+    let accessData: IAuthData = JSON.parse(userJson);
     if (this.jwtHelper.isTokenExpired(accessData.token)) return
     this.autoLogout(accessData.token)
     this.authSubject.next(accessData);
+  }
+
+  getUserId(): number | null {
+    let authData = this.authSubject.getValue();
+    return authData ? authData.user.id : null;
   }
 
 }

@@ -8,6 +8,5 @@ export interface IAddress {
   postalCode : string;
   country : string;
   province : string;
-  municipality : string;
   phoneNumber : string;
 }

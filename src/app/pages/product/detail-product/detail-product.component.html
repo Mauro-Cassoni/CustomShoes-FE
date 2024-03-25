@@ -14,7 +14,7 @@
           <h5 class="price text-secondary fw-bold">{{product.price}} €</h5>
           <div class="text-primary">Generally shipped within 5/7 working days.</div>
           <div class="shipping">Free shipping</div>
-          <button class="btn btn-secondary mt-3">Add to cart</button>
+          <button (click)="addToCart($event, product.id)" class="btn btn-secondary mt-3">Add to cart</button>
         </div>
 
         <div class="col-12 p-3 card bg-info">

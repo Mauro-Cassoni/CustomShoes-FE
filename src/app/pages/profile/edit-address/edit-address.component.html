@@ -1,380 +1,147 @@
 <div class="container py-3">
 
-  <div class="row justify-content-center">
+  <div class="row justify-content-center mb-5">
 
-    <h2 class="text-center my-3 text-info">Edit Addresses</h2>
+    <h2 class="text-center my-3 mb-4 text-info">Edit Addresses</h2>
 
-
-    <h3 class="text-center my-3 text-info">Shipping address</h3>
-
-    <!-- name -->
     <div class="col-md-7">
-      <label for="name">Name *</label>
-      <input type="text" id="name" class="form-control bg-light" formControlName="name"
-        [ngClass]="{'is-valid': isValid('name'), 'is-invalid': isInvalid('name')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['name'].dirty" [ngClass]="{ 'valid': isValid('name'), 'invalid': isInvalid('name') }"
-          class="ms-1 text-danger">{{msg.name}}</span>
-      </div>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <div formGroupName="shippingAddress" class="mb-5">
+
+          <h3 class="text-center my-3 text-info">Shipping address</h3>
+
+          <!-- name -->
+          <div>Name *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="name">
+
+          <!-- surname -->
+          <div>Surname *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="surname">
+
+          <!-- street -->
+          <div>Street *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="street">
+
+          <!-- street number -->
+          <div>Street number *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="streetNumber">
+
+          <!-- city -->
+          <div>City *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="city">
+
+          <!-- postal code -->
+          <div>Postal code *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="postalCode">
+
+          <!-- country -->
+          <div>Country *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="country">
+
+          <!-- province -->
+          <div>Province *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="province">
+
+          <!-- phoneNumber -->
+          <div>Phone number</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="phoneNumber">
+
+        </div>
+
+
+        <!-- Business section -->
+
+        <!-- *ngIf="user.user.userType === 'BUSINESS'" > -->
+
+        <div formGroupName="registeredOfficeAddress" class="mb-5" *ngIf="user.user.userType === 'BUSINESS'">
+
+          <h3 class="text-center my-3 text-info">Registered office address</h3>
+
+          <!-- name -->
+          <div>Name *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="name">
+
+          <!-- surname -->
+          <div>Surname *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="surname">
+
+          <!-- street -->
+          <div>Street *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="street">
+
+          <!-- street number -->
+          <div>Street number *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="streetNumber">
+
+          <!-- city -->
+          <div>City *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="city">
+
+          <!-- postal code -->
+          <div>Postal code *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="postalCode">
+
+          <!-- country -->
+          <div>Country *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="country">
+
+          <!-- province -->
+          <div>Province *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="province">
+
+          <!-- phoneNumber -->
+          <div>Phone number</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="phoneNumber">
+
+        </div>
+
+        <div formGroupName="operationalHeadquartersAddress" class="mb-5" *ngIf="user.user.userType === 'BUSINESS'">
+
+          <h3 class="text-center my-3 text-info">Operational headquarters address</h3>
+
+          <!-- name -->
+          <div>Name *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="name">
+
+          <!-- surname -->
+          <div>Surname *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="surname">
+
+          <!-- street -->
+          <div>Street *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="street">
+
+          <!-- street number -->
+          <div>Street number *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="streetNumber">
+
+          <!-- city -->
+          <div>City *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="city">
+
+          <!-- postal code -->
+          <div>Postal code *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="postalCode">
+
+          <!-- country -->
+          <div>Country *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="country">
+
+          <!-- province -->
+          <div>Province *</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="province">
+
+          <!-- phoneNumber -->
+          <div>Phone number</div>
+          <input type="text" class="form-control bg-light mb-4" formControlName="phoneNumber">
+
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Send</button>
+
+      </form>
     </div>
-
-    <!-- surname -->
-    <div class="col-md-7">
-      <label for="surname">Surname *</label>
-      <input type="text" id="surname" class="form-control bg-light" formControlName="surname"
-        [ngClass]="{'is-valid': isValid('surname'), 'is-invalid': isInvalid('surname')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['surname'].dirty"
-          [ngClass]="{ 'valid': isValid('surname'), 'invalid': isInvalid('surname') }"
-          class="ms-1 text-danger">{{msg.surname}}</span>
-      </div>
-    </div>
-
-    <!-- street -->
-    <div class="col-md-7">
-      <label for="street">Street *</label>
-      <input type="street" id="street" class="form-control bg-light" formControlName="street"
-        [ngClass]="{'is-valid': isValid('street'), 'is-invalid': isInvalid('street')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['street'].dirty"
-          [ngClass]="{ 'valid': isValid('street'), 'invalid': isInvalid('street') }"
-          class="ms-1 text-danger">{{msg.street}}</span>
-      </div>
-    </div>
-
-    <!-- street number -->
-    <div class="col-md-7">
-      <label for="streetNumber">Street number *</label>
-      <input type="streetNumber" id="streetNumber" class="form-control bg-light" formControlName="streetNumber"
-        [ngClass]="{'is-valid': isValid('streetNumber'), 'is-invalid': isInvalid('streetNumber')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['streetNumber'].dirty"
-          [ngClass]="{ 'valid': isValid('streetNumber'), 'invalid': isInvalid('streetNumber') }"
-          class="ms-1 text-danger">{{msg.streetNumber}}</span>
-      </div>
-    </div>
-
-    <!-- city -->
-    <div class="col-md-7">
-      <label for="city">City *</label>
-      <input type="city" id="city" class="form-control bg-light" formControlName="city"
-        [ngClass]="{'is-valid': isValid('city'), 'is-invalid': isInvalid('city')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['city'].dirty" [ngClass]="{ 'valid': isValid('city'), 'invalid': isInvalid('city') }"
-          class="ms-1 text-danger">{{msg.city}}</span>
-      </div>
-    </div>
-
-    <!-- postal code -->
-    <div class="col-md-7">
-      <label for="postalCode">Postal code *</label>
-      <input type="postalCode" id="postalCode" class="form-control bg-light" formControlName="postalCode"
-        [ngClass]="{'is-valid': isValid('postalCode'), 'is-invalid': isInvalid('postalCode')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['postalCode'].dirty"
-          [ngClass]="{ 'valid': isValid('postalCode'), 'invalid': isInvalid('postalCode') }"
-          class="ms-1 text-danger">{{msg.postalCode}}</span>
-      </div>
-    </div>
-
-    <!-- country -->
-    <div class="col-md-7">
-      <label for="country">country *</label>
-      <input type="country" id="country" class="form-control bg-light" formControlName="country"
-        [ngClass]="{'is-valid': isValid('country'), 'is-invalid': isInvalid('country')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['country'].dirty"
-          [ngClass]="{ 'valid': isValid('country'), 'invalid': isInvalid('country') }"
-          class="ms-1 text-danger">{{msg.country}}</span>
-      </div>
-    </div>
-
-    <!-- province -->
-    <div class="col-md-7">
-      <label for="province">Province *</label>
-      <input type="province" id="province" class="form-control bg-light" formControlName="province"
-        [ngClass]="{'is-valid': isValid('province'), 'is-invalid': isInvalid('province')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['province'].dirty"
-          [ngClass]="{ 'valid': isValid('province'), 'invalid': isInvalid('province') }"
-          class="ms-1 text-danger">{{msg.province}}</span>
-      </div>
-    </div>
-
-    <!-- municipality -->
-    <div class="col-md-7">
-      <label for="municipality">Municipality *</label>
-      <input type="municipality" id="municipality" class="form-control bg-light" formControlName="municipality"
-        [ngClass]="{'is-valid': isValid('municipality'), 'is-invalid': isInvalid('municipality')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['municipality'].dirty"
-          [ngClass]="{ 'valid': isValid('municipality'), 'invalid': isInvalid('municipality') }"
-          class="ms-1 text-danger">{{msg.municipality}}</span>
-      </div>
-    </div>
-
-    <!-- phoneNumber -->
-    <div class="col-md-7">
-      <label for="phoneNumber">Phone number *</label>
-      <input type="phoneNumber" id="phoneNumber" class="form-control bg-light" formControlName="phoneNumber"
-        [ngClass]="{'is-valid': isValid('phoneNumber'), 'is-invalid': isInvalid('phoneNumber')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['phoneNumber'].dirty"
-          [ngClass]="{ 'valid': isValid('phoneNumber'), 'invalid': isInvalid('phoneNumber') }"
-          class="ms-1 text-danger">{{msg.phoneNumber}}</span>
-      </div>
-    </div>
-
-  </div>
-
-
-  <!-- Business section -->
-  <div *ngIf="user.user.userType === 'BUSINESS'">
-
-
-    <h3 class="text-center my-3 text-info">Registered office address</h3>
-
-    <!-- name -->
-    <div class="col-md-7">
-      <label for="name">Name *</label>
-      <input type="text" id="name" class="form-control bg-light" formControlName="name"
-        [ngClass]="{'is-valid': isValid('name'), 'is-invalid': isInvalid('name')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['name'].dirty" [ngClass]="{ 'valid': isValid('name'), 'invalid': isInvalid('name') }"
-          class="ms-1 text-danger">{{msg.name}}</span>
-      </div>
-    </div>
-
-    <!-- surname -->
-    <div class="col-md-7">
-      <label for="surname">Surname *</label>
-      <input type="text" id="surname" class="form-control bg-light" formControlName="surname"
-        [ngClass]="{'is-valid': isValid('surname'), 'is-invalid': isInvalid('surname')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['surname'].dirty"
-          [ngClass]="{ 'valid': isValid('surname'), 'invalid': isInvalid('surname') }"
-          class="ms-1 text-danger">{{msg.surname}}</span>
-      </div>
-    </div>
-
-    <!-- street -->
-    <div class="col-md-7">
-      <label for="street">Street *</label>
-      <input type="street" id="street" class="form-control bg-light" formControlName="street"
-        [ngClass]="{'is-valid': isValid('street'), 'is-invalid': isInvalid('street')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['street'].dirty"
-          [ngClass]="{ 'valid': isValid('street'), 'invalid': isInvalid('street') }"
-          class="ms-1 text-danger">{{msg.street}}</span>
-      </div>
-    </div>
-
-    <!-- street number -->
-    <div class="col-md-7">
-      <label for="streetNumber">Street number *</label>
-      <input type="streetNumber" id="streetNumber" class="form-control bg-light" formControlName="streetNumber"
-        [ngClass]="{'is-valid': isValid('streetNumber'), 'is-invalid': isInvalid('streetNumber')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['streetNumber'].dirty"
-          [ngClass]="{ 'valid': isValid('streetNumber'), 'invalid': isInvalid('streetNumber') }"
-          class="ms-1 text-danger">{{msg.streetNumber}}</span>
-      </div>
-    </div>
-
-    <!-- city -->
-    <div class="col-md-7">
-      <label for="city">City *</label>
-      <input type="city" id="city" class="form-control bg-light" formControlName="city"
-        [ngClass]="{'is-valid': isValid('city'), 'is-invalid': isInvalid('city')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['city'].dirty" [ngClass]="{ 'valid': isValid('city'), 'invalid': isInvalid('city') }"
-          class="ms-1 text-danger">{{msg.city}}</span>
-      </div>
-    </div>
-
-    <!-- postal code -->
-    <div class="col-md-7">
-      <label for="postalCode">Postal code *</label>
-      <input type="postalCode" id="postalCode" class="form-control bg-light" formControlName="postalCode"
-        [ngClass]="{'is-valid': isValid('postalCode'), 'is-invalid': isInvalid('postalCode')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['postalCode'].dirty"
-          [ngClass]="{ 'valid': isValid('postalCode'), 'invalid': isInvalid('postalCode') }"
-          class="ms-1 text-danger">{{msg.postalCode}}</span>
-      </div>
-    </div>
-
-    <!-- country -->
-    <div class="col-md-7">
-      <label for="country">country *</label>
-      <input type="country" id="country" class="form-control bg-light" formControlName="country"
-        [ngClass]="{'is-valid': isValid('country'), 'is-invalid': isInvalid('country')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['country'].dirty"
-          [ngClass]="{ 'valid': isValid('country'), 'invalid': isInvalid('country') }"
-          class="ms-1 text-danger">{{msg.country}}</span>
-      </div>
-    </div>
-
-    <!-- province -->
-    <div class="col-md-7">
-      <label for="province">Province *</label>
-      <input type="province" id="province" class="form-control bg-light" formControlName="province"
-        [ngClass]="{'is-valid': isValid('province'), 'is-invalid': isInvalid('province')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['province'].dirty"
-          [ngClass]="{ 'valid': isValid('province'), 'invalid': isInvalid('province') }"
-          class="ms-1 text-danger">{{msg.province}}</span>
-      </div>
-    </div>
-
-    <!-- municipality -->
-    <div class="col-md-7">
-      <label for="municipality">Municipality *</label>
-      <input type="municipality" id="municipality" class="form-control bg-light" formControlName="municipality"
-        [ngClass]="{'is-valid': isValid('municipality'), 'is-invalid': isInvalid('municipality')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['municipality'].dirty"
-          [ngClass]="{ 'valid': isValid('municipality'), 'invalid': isInvalid('municipality') }"
-          class="ms-1 text-danger">{{msg.municipality}}</span>
-      </div>
-    </div>
-
-    <!-- phoneNumber -->
-    <div class="col-md-7">
-      <label for="phoneNumber">Phone number *</label>
-      <input type="phoneNumber" id="phoneNumber" class="form-control bg-light" formControlName="phoneNumber"
-        [ngClass]="{'is-valid': isValid('phoneNumber'), 'is-invalid': isInvalid('phoneNumber')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['phoneNumber'].dirty"
-          [ngClass]="{ 'valid': isValid('phoneNumber'), 'invalid': isInvalid('phoneNumber') }"
-          class="ms-1 text-danger">{{msg.phoneNumber}}</span>
-      </div>
-    </div>
-
-
-    <h3 class="text-center my-3 text-info">Operational headquarters address</h3>
-
-    <!-- name -->
-    <div class="col-md-7">
-      <label for="name">Name *</label>
-      <input type="text" id="name" class="form-control bg-light" formControlName="name"
-        [ngClass]="{'is-valid': isValid('name'), 'is-invalid': isInvalid('name')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['name'].dirty" [ngClass]="{ 'valid': isValid('name'), 'invalid': isInvalid('name') }"
-          class="ms-1 text-danger">{{msg.name}}</span>
-      </div>
-    </div>
-
-    <!-- surname -->
-    <div class="col-md-7">
-      <label for="surname">Surname *</label>
-      <input type="text" id="surname" class="form-control bg-light" formControlName="surname"
-        [ngClass]="{'is-valid': isValid('surname'), 'is-invalid': isInvalid('surname')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['surname'].dirty"
-          [ngClass]="{ 'valid': isValid('surname'), 'invalid': isInvalid('surname') }"
-          class="ms-1 text-danger">{{msg.surname}}</span>
-      </div>
-    </div>
-
-    <!-- street -->
-    <div class="col-md-7">
-      <label for="street">Street *</label>
-      <input type="street" id="street" class="form-control bg-light" formControlName="street"
-        [ngClass]="{'is-valid': isValid('street'), 'is-invalid': isInvalid('street')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['street'].dirty"
-          [ngClass]="{ 'valid': isValid('street'), 'invalid': isInvalid('street') }"
-          class="ms-1 text-danger">{{msg.street}}</span>
-      </div>
-    </div>
-
-    <!-- street number -->
-    <div class="col-md-7">
-      <label for="streetNumber">Street number *</label>
-      <input type="streetNumber" id="streetNumber" class="form-control bg-light" formControlName="streetNumber"
-        [ngClass]="{'is-valid': isValid('streetNumber'), 'is-invalid': isInvalid('streetNumber')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['streetNumber'].dirty"
-          [ngClass]="{ 'valid': isValid('streetNumber'), 'invalid': isInvalid('streetNumber') }"
-          class="ms-1 text-danger">{{msg.streetNumber}}</span>
-      </div>
-    </div>
-
-    <!-- city -->
-    <div class="col-md-7">
-      <label for="city">City *</label>
-      <input type="city" id="city" class="form-control bg-light" formControlName="city"
-        [ngClass]="{'is-valid': isValid('city'), 'is-invalid': isInvalid('city')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['city'].dirty" [ngClass]="{ 'valid': isValid('city'), 'invalid': isInvalid('city') }"
-          class="ms-1 text-danger">{{msg.city}}</span>
-      </div>
-    </div>
-
-    <!-- postal code -->
-    <div class="col-md-7">
-      <label for="postalCode">Postal code *</label>
-      <input type="postalCode" id="postalCode" class="form-control bg-light" formControlName="postalCode"
-        [ngClass]="{'is-valid': isValid('postalCode'), 'is-invalid': isInvalid('postalCode')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['postalCode'].dirty"
-          [ngClass]="{ 'valid': isValid('postalCode'), 'invalid': isInvalid('postalCode') }"
-          class="ms-1 text-danger">{{msg.postalCode}}</span>
-      </div>
-    </div>
-
-    <!-- country -->
-    <div class="col-md-7">
-      <label for="country">country *</label>
-      <input type="country" id="country" class="form-control bg-light" formControlName="country"
-        [ngClass]="{'is-valid': isValid('country'), 'is-invalid': isInvalid('country')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['country'].dirty"
-          [ngClass]="{ 'valid': isValid('country'), 'invalid': isInvalid('country') }"
-          class="ms-1 text-danger">{{msg.country}}</span>
-      </div>
-    </div>
-
-    <!-- province -->
-    <div class="col-md-7">
-      <label for="province">Province *</label>
-      <input type="province" id="province" class="form-control bg-light" formControlName="province"
-        [ngClass]="{'is-valid': isValid('province'), 'is-invalid': isInvalid('province')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['province'].dirty"
-          [ngClass]="{ 'valid': isValid('province'), 'invalid': isInvalid('province') }"
-          class="ms-1 text-danger">{{msg.province}}</span>
-      </div>
-    </div>
-
-    <!-- municipality -->
-    <div class="col-md-7">
-      <label for="municipality">Municipality *</label>
-      <input type="municipality" id="municipality" class="form-control bg-light" formControlName="municipality"
-        [ngClass]="{'is-valid': isValid('municipality'), 'is-invalid': isInvalid('municipality')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['municipality'].dirty"
-          [ngClass]="{ 'valid': isValid('municipality'), 'invalid': isInvalid('municipality') }"
-          class="ms-1 text-danger">{{msg.municipality}}</span>
-      </div>
-    </div>
-
-    <!-- phoneNumber -->
-    <div class="col-md-7">
-      <label for="phoneNumber">Phone number *</label>
-      <input type="phoneNumber" id="phoneNumber" class="form-control bg-light" formControlName="phoneNumber"
-        [ngClass]="{'is-valid': isValid('phoneNumber'), 'is-invalid': isInvalid('phoneNumber')}">
-      <div class="error-msg">
-        <span *ngIf="form.controls['phoneNumber'].dirty"
-          [ngClass]="{ 'valid': isValid('phoneNumber'), 'invalid': isInvalid('phoneNumber') }"
-          class="ms-1 text-danger">{{msg.phoneNumber}}</span>
-      </div>
-    </div>
-
-
-
 
 
   </div>
