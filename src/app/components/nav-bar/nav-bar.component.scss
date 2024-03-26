@@ -44,9 +44,24 @@ img {
   display: none;
 }
 
+.dropdown-toggle:focus{
+
+}
+
 .dropdown-menu {
   transform-origin: right top;
   transform: translateX(-78%);
+}
+
+.dropdown-item{
+padding: 4px;
+}
+.cart-dropdown{
+  width: 234px;
+}
+
+.cart-name{
+  width: 10px;
 }
 
 .btn:active,
@@ -59,4 +74,8 @@ img {
 .img-cart{
   width: 30px;
   height: 30px;
+}
+
+a{
+  text-decoration: none;
 }

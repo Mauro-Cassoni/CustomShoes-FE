@@ -7,6 +7,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DetailProductComponent } from './detail-product/detail-product.component';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { DetailProductComponent } from './detail-product/detail-product.componen
     ProductComponent,
     EditProductComponent,
     DetailProductComponent,
+    CartComponent,
   ],
   imports: [
     CommonModule,

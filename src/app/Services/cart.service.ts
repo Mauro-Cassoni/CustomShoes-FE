@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../Models/i-product';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor() { }
+  constructor() {
+    this.cartItems = this.getCartItemsFromLocalStorage();
+  }
 
-  cartItems: IProduct[] = this.getCartItemsFromLocalStorage();
+  private cartItems: IProduct[];
   private cartKey = 'cart';
+
+  removeFromCart(index: number) {
+    if (index >= 0 && index < this.cartItems.length) {
+      this.cartItems.splice(index, 1);
+      this.saveCartItemsToLocalStorage();
+    }
+  }
 
   addToCart(product: IProduct) {
     this.cartItems.push(product);
     this.saveCartItemsToLocalStorage();
-    console.log(this.cartItems);
-
   }
 
   getCartItems() {
@@ -23,9 +31,15 @@ export class CartService {
   }
 
   clearCart() {
+    localStorage.removeItem(this.cartKey);
     this.cartItems = [];
-    this.saveCartItemsToLocalStorage();
-    return this.cartItems;
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: 'Cart emptied correctly.',
+      timer: 2000,
+      showConfirmButton: false
+    });
   }
 
   private saveCartItemsToLocalStorage() {

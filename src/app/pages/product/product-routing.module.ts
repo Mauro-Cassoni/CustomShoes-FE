@@ -5,6 +5,7 @@ import { NewProductComponent } from './new-product/new-product.component';
 import { AuthGuard } from '../profile/auth.guard';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { DetailProductComponent } from './detail-product/detail-product.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,11 @@ const routes: Routes = [
     path: 'detail-product/:id',
     component: DetailProductComponent,
     title: 'Detail Product - CustomShoes',
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+    title: 'Cart - CustomShoes',
   },
 ];
 
