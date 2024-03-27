@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CartService } from '../../../Services/cart.service';
 import { AuthService } from '../../../Services/auth.service';
+import { IAuthData } from '../../../Models/auth/i-auth-data';
+import { Role } from '../../../Enums/role';
+import { UserType } from '../../../Enums/user-type';
 
 @Component({
   selector: 'app-cart',
@@ -15,10 +18,36 @@ export class CartComponent {
   ){}
 
   isLoggedIn$!:boolean
+  user: IAuthData ={
+    token: '',
+    user: {
+      id: 0,
+      email: '',
+      password: '',
+      name: '',
+      surname: '',
+      phoneNumber: '',
+      userType: UserType.CUSTOMER,
+      wishlist: [],
+      role: Role.USER,
+      businessName: '',
+      vatNumber: '',
+      insertionDate: '',
+      pec: '',
+      sdi: '',
+      invoices: [],
+      shippingAddress: undefined,
+      registeredOfficeAddress: undefined,
+      operationalHeadquartersAddress: undefined
+    }
+  }
 
   ngOnInit(){
     this.authService.isLoggedIn$.subscribe(res => this.isLoggedIn$ = res);
     this.cartService.getCartItems();
+    this.authService.user$.subscribe(res => {
+      if (res) this.user = res;
+    });
   }
 
   total(){
@@ -27,6 +56,12 @@ export class CartComponent {
       total += i.price;
     }
     return total;
+  }
+
+  businessTotal(){
+    let total = this.total();
+    let businessTotal = total - (total * 0.22);
+    return businessTotal
   }
 
   removeAll(){

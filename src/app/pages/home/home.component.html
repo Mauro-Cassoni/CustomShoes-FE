@@ -34,8 +34,18 @@
           <li class="list-group-item text-start"><span class="text-primary">Brand: </span> <span>{{p.brand}}</span></li>
           <li class="list-group-item text-start"><span class="text-primary">Category: </span>
             <span>{{p.category}}</span></li>
-          <li class="list-group-item text-start"><span class="text-primary">Price: </span> <span>{{p.price | number:'1.2-2' }}€</span>
+
+          <!-- customer price -->
+          <li class="list-group-item text-start" *ngIf="user.user.userType != 'BUSINESS'">
+            <span class="text-primary">Price: </span> <span>{{p.price | number:'1.2-2' }}€</span>
           </li>
+
+          <!-- business price -->
+          <li class="list-group-item text-start" *ngIf="user.user.userType == 'BUSINESS'">
+            <span class="text-primary">Price: </span> <span>{{ (p.price * 0.78) | number:'1.2-2' }}€</span>
+          </li>
+
+
         </ul>
         <div class="card-body">
           <a (click)="addToCart($event, p.id)" class="card-link btn btn-secondary">Add to cart</a>

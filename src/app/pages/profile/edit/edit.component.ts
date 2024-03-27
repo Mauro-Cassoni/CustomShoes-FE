@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { UserType } from '../../../Enums/user-type';
 import { IRegisterData } from '../../../Models/auth/i-register-data';
 import { Role } from '../../../Enums/role';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit',
@@ -124,13 +125,22 @@ export class EditComponent {
     this.authService.update(this.user.user.id,this.form.value)
       .pipe(tap(() => {
         this.loading = false
-      }), catchError(error => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Your profile has been updated successfully.',
+        }).then(() => {
+          this.router.navigate(['/account']);
+        });
+      }),
+      catchError(error => {
         this.somethingWrong = true;
         console.log(error);
-
         throw error;
-      })).subscribe();
-  }
+      })
+    )
+    .subscribe();
+}
 
   invalidMessages(fieldName: string): string {
     const field: AbstractControl | null = this.form.get(fieldName)

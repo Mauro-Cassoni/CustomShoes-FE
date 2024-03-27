@@ -42,10 +42,7 @@ img {
 
 .dropdown-toggle::after {
   display: none;
-}
-
-.dropdown-toggle:focus{
-
+  outline: 0;
 }
 
 .dropdown-menu {

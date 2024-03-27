@@ -15,31 +15,41 @@
         </button>
       </form>
 
-  <!-- cart button -->
-  <div class="mx-2">
-    <div class="col">
-      <div ngbDropdown class="d-inline-block">
-        <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
-          <i class="bi bi-cart3 btnProfile text-info position-relative"></i>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-            {{ cartService.getCartItems().length }}
-          </span>
-        </button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="p-1">
-          <a *ngFor="let p of cartService.getCartItems()" ngbDropdownItem>
-            <div class="cart-dropdown d-flex align-items-center">
-              <div class="col-2">
-                <img class="img-cart rounded mx-1 border border-1 border-primary" [src]="p.img"></div>
-              <div class="col text-dark cart-name">{{p.name}}</div>
-              <div class="colcol-3 text-info">{{p.price | number:'1.2-2' }}€</div>
+      <!-- cart button -->
+      <div class="mx-2">
+        <div class="col">
+          <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+              <i class="bi bi-cart3 btnProfile text-info position-relative"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                {{ cartService.getCartItems().length }}
+              </span>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="p-1">
+              <a *ngFor="let p of cartService.getCartItems()" ngbDropdownItem>
+                <div class="cart-dropdown d-flex align-items-center">
+                  <div class="col-2">
+                    <img class="img-cart rounded mx-1 border border-1 border-primary" [src]="p.img">
+                  </div>
+                  <div class="col text-dark cart-name">{{p.name}}</div>
+
+                  <!-- normal price -->
+                  <div class="colcol-3 text-info" *ngIf="user.user.userType != 'BUSINESS'">
+                    {{p.price | number:'1.2-2' }}€</div>
+
+                  <!-- business price -->
+                  <div class="colcol-3 text-info" *ngIf="user.user.userType == 'BUSINESS'">
+                    {{ (p.price * 0.78) | number:'1.2-2' }}€</div>
+
+                </div>
+              </a>
+              <a *ngIf="cartService.getCartItems().length > 0" class="btn btn-secondary w-100"
+                routerLink="/product/cart">Go to cart</a>
+              <div *ngIf="cartService.getCartItems().length === 0" class="dropdown-item">Your cart is empty</div>
             </div>
-          </a>
-          <a *ngIf="cartService.getCartItems().length > 0" class="btn btn-secondary w-100" routerLink="/product/cart">Go to cart</a>
-          <div *ngIf="cartService.getCartItems().length === 0" class="dropdown-item">Your cart is empty</div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
       <!-- no logged profile -->
       <div class="mx-2" *ngIf="!isLoggedIn$">
@@ -94,12 +104,22 @@
           <a *ngFor="let p of cartService.getCartItems()" ngbDropdownItem>
             <div class="cart-dropdown d-flex align-items-center">
               <div class="col-2">
-                <img class="img-cart rounded mx-1 border border-1 border-primary" [src]="p.img"></div>
+                <img class="img-cart rounded mx-1 border border-1 border-primary" [src]="p.img">
+              </div>
               <div class="col text-dark cart-name">{{p.name}}</div>
-              <div class="colcol-3 text-info">{{p.price | number:'1.2-2' }}€</div>
+
+              <!-- normal price -->
+              <div class="colcol-3 text-info" *ngIf="user.user.userType != 'BUSINESS'">
+                {{p.price | number:'1.2-2' }}€</div>
+
+              <!-- business price -->
+              <div class="colcol-3 text-info" *ngIf="user.user.userType == 'BUSINESS'">
+                {{ (p.price * 0.78) | number:'1.2-2' }}€</div>
+
             </div>
           </a>
-          <a *ngIf="cartService.getCartItems().length > 0" class="btn btn-secondary w-100" routerLink="/product/cart">Go to cart</a>
+          <a *ngIf="cartService.getCartItems().length > 0" class="btn btn-secondary w-100" routerLink="/product/cart">Go
+            to cart</a>
           <div *ngIf="cartService.getCartItems().length === 0" class="dropdown-item">Your cart is empty</div>
         </div>
       </div>
